@@ -7,8 +7,13 @@ import { Mac } from './mac.entity';
 export class MacController {
     constructor(private readonly macService: MacService) {}
 
-    @Post('macs')
-    createMac(@Body() params: MacParams): Promise<Mac> {
-        return this.macService.createOne(params);
+    @Get('users/:id/macs')
+    findUserMac(@Param('id') id: string): Promise<Mac[]> {
+        return this.macService.findMacByUserId(id);
+    }
+
+    @Post('users/:id/macs')
+    createMac(@Param('id') id: string, @Body() params: MacParams): Promise<Mac> {
+        return this.macService.createMac({ ...params, user: id });
     }
 }

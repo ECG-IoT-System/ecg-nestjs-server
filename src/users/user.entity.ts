@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectID } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ObjectID, OneToMany } from 'typeorm';
+import { Ecgdata } from 'src/gateways/entities/ecgdata.entity';
+import { Mac } from 'src/macs/mac.entity';
 
 @Entity()
 export class User {
@@ -7,4 +9,10 @@ export class User {
 
   @Column({ unique: true })
   username: string;
+
+  @OneToMany(type => Ecgdata, ecgdaton => ecgdaton.user)
+  ecgdata: Ecgdata[];
+
+  @OneToMany(type => Mac, mac => mac.user)
+  macs: Mac[];
 }

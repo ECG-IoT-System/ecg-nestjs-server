@@ -27,7 +27,7 @@ export class GatewayController {
         }
 
         // move to pipes
-        let user = mac.user;
+        let user_id = mac.id;
         let device_id = mac.device_id;
 
         let timediff = params.time[1] - params.time[0];
@@ -37,7 +37,7 @@ export class GatewayController {
         let body = [];
         params.data.forEach(function(data, index) {
             let timestamp = params.time[0] + index * signals_rate;
-            body.push({ user, device_id, data, timestamp });
+            body.push({ user: user_id, device_id, data, timestamp });
         })
 
         // gsensor
@@ -47,7 +47,7 @@ export class GatewayController {
         .forEach(function(value, index) {
             let timestamp = params.time[0] + index * gsensor_rate;
             let axis = { axisX: value[0], axisY: value[1], axisZ: value[2] }
-            gbody.push({ user, device_id, timestamp, ...axis });
+            gbody.push({ user: user_id, device_id, timestamp, ...axis });
         })
 
         function groupArr(data, n) {

@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Param, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from 'src/users/user.entity';
 import { UserParams } from './view-models/user-params.model';
+import { Between, MoreThan } from 'typeorm';
+import { Ecgdata } from 'src/gateways/entities/ecgdata.entity';
 
 @Controller()
 export class UserController {
@@ -21,8 +23,23 @@ export class UserController {
       return this.userService.findOne(id);
     }
 
+    @Get('users/:id/ecgdata')
+    findUserEcgdata(
+        @Param('id') id: string, 
+        @Query('from') from: string, 
+        @Query('to') to?: string,
+        @Query('limit') limit?: string
+        ): Promise<Ecgdata[]> {
+        
+        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST)
+        
+        if (to) return this.userService.findEcgdataByUser({ user_id: id, timestamp: Between(from, to) })
+        
+        return this.userService.findEcgdataByUser({ user_id: id, timestamp: MoreThan(from), take: limit || 2304 })
+    }
+
     @Post('users')
-    createUser(@Body() params: UserParams) {
+    createUser(@Body() params: UserParams): Promise<User> {
         return this.userService.createOne(params);
     }
 }
