@@ -15,7 +15,7 @@ import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
     GatewayModule,
     MacModule,
     CoefModule,
-    Ecgdata12Module
+    Ecgdata12Module,
   ],
   controllers: [AppController],
   providers: [AppService],

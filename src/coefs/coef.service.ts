@@ -19,10 +19,10 @@ export class CoefService {
   }
 
   async findAll(): Promise<User[]> {
-    return await this.userRepository.find({ relations: ["coefs"] });
+    return await this.userRepository.find({ relations: ['coefs'] });
   }
 
-  async findbyUserId(user,version): Promise<Coef[]> {
-    return await this.coefRepository.find({ user,version })
+  async findbyUserId(user, version): Promise<Coef[]> {
+    return await this.coefRepository.find({ user, version });
   }
 }

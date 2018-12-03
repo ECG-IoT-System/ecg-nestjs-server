@@ -14,9 +14,9 @@ export class Rssi {
   mac: string;
 
   @Column({ type: 'int' })
-  rssi: number
+  rssi: number;
 
   @Column({ type: 'double' })
   @Index()
-  timestamp: Number
+  timestamp: number;
 }

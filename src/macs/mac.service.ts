@@ -15,10 +15,10 @@ export class MacService {
   }
 
   async createMac(params): Promise<Mac> {
-    return await this.macRepository.save(params)
+    return await this.macRepository.save(params);
   }
 
   async findMacByUserId(id): Promise<Mac[]> {
-    return await this.macRepository.find({ user: id })
+    return await this.macRepository.find({ user: id });
   }
 }

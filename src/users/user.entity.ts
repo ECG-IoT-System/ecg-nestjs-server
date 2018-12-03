@@ -28,7 +28,7 @@ export class User {
 
   @OneToMany(type => Mac, mac => mac.user)
   macs: Mac[];
-  
+
   @OneToMany(type => Coef, coef => coef.user)
   coefs: Coef[];
 }

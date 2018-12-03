@@ -18,5 +18,5 @@ export class Ecgdata {
 
   @Column({ type: 'double' })
   @Index()
-  timestamp: Number
+  timestamp: number;
 }

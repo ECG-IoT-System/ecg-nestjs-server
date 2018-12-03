@@ -35,6 +35,6 @@ export class GatewayService {
   }
 
   async findMac(mac: string): Promise<Mac> {
-    return await this.macRepository.findOne({ where: { mac }, relations: ["user"] });
+    return await this.macRepository.findOne({ where: { mac }, relations: ['user'] });
   }
 }

@@ -35,7 +35,7 @@ export class UserService {
   }
 
   async findEcgdataByUser(query): Promise<Ecgdata[]> {
-    query.order = { timestamp: "ASC" }
+    query.order = { timestamp: 'ASC' };
     return await this.ecgdataRepository.find(query);
   }
 

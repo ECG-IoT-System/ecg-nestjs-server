@@ -24,5 +24,5 @@ export class Coef {
 
   @Column()
   HH: string;
-  
+
 }

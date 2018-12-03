@@ -24,5 +24,5 @@ export class Gsensor {
 
   @Column({ type: 'double' })
   @Index()
-  timestamp: Number
+  timestamp: number;
 }

@@ -25,17 +25,17 @@ export class UserController {
 
     @Get('users/:id/ecgdata')
     findUserEcgdata(
-        @Param('id') id: string, 
-        @Query('from') from: string, 
+        @Param('id') id: string,
+        @Query('from') from: string,
         @Query('to') to?: string,
-        @Query('limit') limit?: string
+        @Query('limit') limit?: string,
         ): Promise<Ecgdata[]> {
-        
-        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST)
-        
-        if (to) return this.userService.findEcgdataByUser({ user_id: id, timestamp: Between(from, to) })
-        
-        return this.userService.findEcgdataByUser({ user_id: id, timestamp: MoreThan(from), take: limit || 2304 })
+
+        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
+
+        if (to) return this.userService.findEcgdataByUser({ user_id: id, timestamp: Between(from, to) });
+
+        return this.userService.findEcgdataByUser({ user_id: id, timestamp: MoreThan(from), take: limit || 2304 });
     }
 
     @Post('users')

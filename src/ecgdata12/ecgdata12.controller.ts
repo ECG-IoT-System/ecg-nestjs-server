@@ -9,17 +9,17 @@ export class Ecgdata12Controller {
     @Post('users/:id/ecgdata12')
     async createEcgdata12(@Param('id') id: string, @Body() params: Array<Ecgdata12Params>) {
         // move to enum
-        let keys = ["L1", "L2", "L3", "V1", "V2", "V3", "V4", "V5", "V6", "aVR", "aVL", "aVF"]
+        const keys = ['L1', 'L2', 'L3', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'aVR', 'aVL', 'aVF'];
 
-        let body = []
+        const body = [];
         params.forEach(obj => {
-            let rst = { user: id, timestamp: obj.time }
+            const rst = { user: id, timestamp: obj.time };
             keys.forEach((key, index) => {
-                rst[key] = obj.ecg[index]
-            })
-            body.push(rst)
-        })
+                rst[key] = obj.ecg[index];
+            });
+            body.push(rst);
+        });
 
-        return this.ecgdata12Service.createEcgdata12(body)
+        return this.ecgdata12Service.createEcgdata12(body);
     }
 }
