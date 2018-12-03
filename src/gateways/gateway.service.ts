@@ -11,7 +11,7 @@ export class GatewayService {
   constructor(
     @InjectRepository(Ecgdata)
     private readonly ecgdataRepository: Repository<Ecgdata>,
-    
+
     @InjectRepository(Gsensor)
     private readonly gsensorRepository: Repository<Gsensor>,
 
@@ -22,7 +22,7 @@ export class GatewayService {
     private readonly macRepository: Repository<Mac>,
   ) {}
 
-  async createSignals(params): Promise<Ecgdata[]> {
+  async createEcgdata(params): Promise<Ecgdata[]> {
     return await this.ecgdataRepository.save(params);
   }
 

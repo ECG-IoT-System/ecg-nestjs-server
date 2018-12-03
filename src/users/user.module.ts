@@ -5,7 +5,7 @@ import { UserController } from './user.controller';
 import { User } from 'src/users/user.entity';
 import { Ecgdata } from 'src/gateways/entities/ecgdata.entity';
 import { Mac } from 'src/macs/mac.entity';
-import { Ecgdata12 } from 'src/gateways/entities/ecgdata12.entity';
+import { Ecgdata12 } from 'src/ecgdata12/ecgdata12.entity';
 import { Gsensor } from 'src/gateways/entities/gsensor.entity';
 
 @Module({

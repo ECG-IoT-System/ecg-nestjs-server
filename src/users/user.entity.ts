@@ -3,7 +3,7 @@ import { Ecgdata } from 'src/gateways/entities/ecgdata.entity';
 import { Mac } from 'src/macs/mac.entity';
 import { Coef } from 'src/coefs/coef.entity';
 import { Gsensor } from 'src/gateways/entities/gsensor.entity';
-import { Ecgdata12 } from 'src/gateways/entities/ecgdata12.entity';
+import { Ecgdata12 } from 'src/ecgdata12/ecgdata12.entity';
 import { Rssi } from 'src/gateways/entities/rssi.entity';
 
 @Entity()

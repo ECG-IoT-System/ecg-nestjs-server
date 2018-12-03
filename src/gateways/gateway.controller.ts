@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { GatewayParams } from './view-models/gateway-params.model';
+import { Ecgdata12Params } from '../ecgdata12/view-models/ecgdata12-params.model';
 
 @Controller()
 export class GatewayController {
@@ -8,8 +9,8 @@ export class GatewayController {
         private readonly gatewayService: GatewayService, 
         ) {}
 
-    @Post('pads/signals')
-    async createSignals(@Body() params: GatewayParams, @Res() res) {
+    @Post('ecgdata')
+    async createEcgdata(@Body() params: GatewayParams, @Res() res) {
         if (!params.data && params.gsensor && params.mac && params.time) {
             throw new HttpException('Data, Gsensor, Mac, Signals are required', HttpStatus.BAD_REQUEST)
         }
@@ -49,8 +50,7 @@ export class GatewayController {
         let gsensor_rate = timediff / params.gsensor.length;
         let gbody = [];
         groupArr(params.gsensor, 3)
-        .map(function(value, index) {
-            console.log("i", index)
+        .forEach(function(value, index) {
             let timestamp = params.time[0] + index * gsensor_rate;
             let axis = { axisX: value[0], axisY: value[1], axisZ: value[2] }
             gbody.push({ user: user.id, device_id, timestamp, ...axis });
@@ -70,7 +70,7 @@ export class GatewayController {
         }
         // move to pipes -- end
 
-        this.gatewayService.createSignals(body);
+        this.gatewayService.createEcgdata(body);
         this.gatewayService.createGensors(gbody);
 
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: "success create"});
