@@ -11,8 +11,8 @@ export class GatewayController {
     @Post('pads/signals')
     async createSignals(@Body() params: GatewayParams, @Res() res) {
         console.log(params)
-        if (params.rssi) {
-            this.gatewayService.createRssi({ rssi: params.rssi })
+        if (params.gsensor) {
+            this.gatewayService.createGensors({ gsensor: params.gsensor })
         }
 
         if (!params.data && params.gsensor && params.mac && params.time) {
@@ -64,7 +64,7 @@ export class GatewayController {
         }
         // move to pipes -- end
 
-        this.gatewayService.createRssi(gbody);
+        this.gatewayService.createGensors(gbody);
         this.gatewayService.createSignals(body);
 
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: "success create"});

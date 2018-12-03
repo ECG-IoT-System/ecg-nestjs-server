@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getConnection } from 'typeorm';
 import { Ecgdata } from './entities/ecgdata.entity';
-import { Rssi } from './entities/rssi.entity';
+import { Gsensor } from './entities/gesensor.entity';
 import { Mac } from 'src/macs/mac.entity';
 
 @Injectable()
@@ -11,8 +11,8 @@ export class GatewayService {
     @InjectRepository(Ecgdata)
     private readonly ecgdataRepository: Repository<Ecgdata>,
     
-    @InjectRepository(Rssi)
-    private readonly rssiRepository: Repository<Rssi>,
+    @InjectRepository(Gsensor)
+    private readonly GsensorRepository: Repository<Gsensor>,
 
     @InjectRepository(Mac)
     private readonly macRepository: Repository<Mac>,
@@ -22,8 +22,8 @@ export class GatewayService {
     return await this.ecgdataRepository.save(Ecgdata);
   }
 
-  async createRssi(Rssi): Promise<Rssi> {
-    return await this.rssiRepository.save(Rssi);
+  async createGensors(Gsensor): Promise<Gsensor> {
+    return await this.GsensorRepository.save(Gsensor);
   }
 
   async getMac(mac: string): Promise<Mac> {

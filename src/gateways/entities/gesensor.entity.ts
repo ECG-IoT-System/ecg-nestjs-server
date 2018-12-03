@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn
 import { User } from 'src/users/user.entity';
 
 @Entity()
-export class Rssi {
+export class Gsensor {
   @PrimaryGeneratedColumn()
   id: ObjectID;
 
