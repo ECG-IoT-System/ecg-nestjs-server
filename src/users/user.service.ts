@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection } from 'typeorm';
-import { User } from 'src/users/user.entity';
-import { Ecgdata } from 'src/gateways/entities/ecgdata.entity';
-import { MacParams } from 'src/macs/view-models/mac-params.model';
-import { Mac } from 'src/macs/mac.entity';
-import { relative } from 'path';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
+import { Ecgdata } from '../gateways/entities/ecgdata.entity';
+import { Mac } from '../macs/mac.entity';
 
 @Injectable()
 export class UserService {

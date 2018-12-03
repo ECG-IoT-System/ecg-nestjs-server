@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getConnection } from 'typeorm';
 import { Ecgdata } from './entities/ecgdata.entity';
 import { Gsensor } from './entities/gsensor.entity';
-import { Mac } from 'src/macs/mac.entity';
+import { Mac } from '../macs/mac.entity';
 import { Rssi } from './entities/rssi.entity';
 
 @Injectable()

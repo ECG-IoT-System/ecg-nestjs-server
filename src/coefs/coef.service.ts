@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getConnection } from 'typeorm';
-import { Coef } from 'src/coefs/coef.entity';
-import { User } from 'src/users/user.entity';
+import { Coef } from './coef.entity';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class CoefService {

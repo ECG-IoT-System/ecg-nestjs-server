@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection } from 'typeorm';
-import { Mac } from 'src/macs/mac.entity';
+import { Repository } from 'typeorm';
+import { Mac } from '../macs/mac.entity';
 
 @Injectable()
 export class MacService {

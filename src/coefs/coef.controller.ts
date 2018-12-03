@@ -2,7 +2,7 @@ import { Controller, Get, Post, Param, Query, Body } from '@nestjs/common';
 import { CoefParams } from './view-models/coef-params.model';
 import { CoefService } from './coef.service';
 import { Coef } from './coef.entity';
-import { User } from 'src/users/user.entity';
+import { User } from '../users/user.entity';
 
 @Controller()
 export class CoefController {

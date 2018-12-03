@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { GatewayParams } from './view-models/gateway-params.model';
-import { Ecgdata12Params } from '../ecgdata12/view-models/ecgdata12-params.model';
 
 @Controller()
 export class GatewayController {

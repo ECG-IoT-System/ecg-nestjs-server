@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from 'src/users/user.entity';
+import { User } from '../users/user.entity';
 import { UserParams } from './view-models/user-params.model';
 import { Between, MoreThan } from 'typeorm';
-import { Ecgdata } from 'src/gateways/entities/ecgdata.entity';
+import { Ecgdata } from '../gateways/entities/ecgdata.entity';
 
 @Controller()
 export class UserController {
