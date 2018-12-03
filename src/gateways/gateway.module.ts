@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GatewayService } from './gateway.service';
 import { GatewayController } from './gateway.controller';
 import { Ecgdata } from './entities/ecgdata.entity';
-import { Gsensor } from './entities/gesensor.entity';
+import { Gsensor } from './entities/gsensor.entity';
 import { Mac } from 'src/macs/mac.entity';
 
 @Module({
