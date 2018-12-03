@@ -6,7 +6,7 @@ export class Ecgdata {
   @PrimaryGeneratedColumn()
   id: ObjectID;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, user => user.id)
   @JoinColumn()
   user: User;
 

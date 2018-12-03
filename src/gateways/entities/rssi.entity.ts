@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn
 import { User } from 'src/users/user.entity';
 
 @Entity()
-export class Gsensor {
+export class Rssi {
   @PrimaryGeneratedColumn()
   id: ObjectID;
 
@@ -10,17 +10,11 @@ export class Gsensor {
   @JoinColumn()
   user: User;
 
+  @Column()
+  mac: string;
+
   @Column({ type: 'int' })
-  device_id: number;
-
-  @Column({ type: 'double' })
-  axisX: number;
-
-  @Column({ type: 'double' })
-  axisY: number;
-
-  @Column({ type: 'double' })
-  axisZ: number;
+  rssi: number
 
   @Column({ type: 'double' })
   @Index()

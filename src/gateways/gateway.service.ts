@@ -4,6 +4,7 @@ import { Repository, getConnection } from 'typeorm';
 import { Ecgdata } from './entities/ecgdata.entity';
 import { Gsensor } from './entities/gsensor.entity';
 import { Mac } from 'src/macs/mac.entity';
+import { Rssi } from './entities/rssi.entity';
 
 @Injectable()
 export class GatewayService {
@@ -12,21 +13,28 @@ export class GatewayService {
     private readonly ecgdataRepository: Repository<Ecgdata>,
     
     @InjectRepository(Gsensor)
-    private readonly GsensorRepository: Repository<Gsensor>,
+    private readonly gsensorRepository: Repository<Gsensor>,
+
+    @InjectRepository(Rssi)
+    private readonly rssiRepository: Repository<Rssi>,
 
     @InjectRepository(Mac)
     private readonly macRepository: Repository<Mac>,
   ) {}
 
-  async createSignals(Ecgdata): Promise<Ecgdata> {
-    return await this.ecgdataRepository.save(Ecgdata);
+  async createSignals(params): Promise<Ecgdata[]> {
+    return await this.ecgdataRepository.save(params);
   }
 
-  async createGensors(Gsensor): Promise<Gsensor> {
-    return await this.GsensorRepository.save(Gsensor);
+  async createGensors(params): Promise<Gsensor[]> {
+    return await this.gsensorRepository.save(params);
   }
 
-  async getMac(mac: string): Promise<Mac> {
-    return await this.macRepository.findOne({ mac });
+  async createRssi(param): Promise<Rssi> {
+    return await this.rssiRepository.save(param);
+  }
+
+  async findMac(mac: string): Promise<Mac> {
+    return await this.macRepository.findOne({ where: { mac }, relations: ["user"] });
   }
 }

@@ -10,26 +10,31 @@ export class GatewayController {
 
     @Post('pads/signals')
     async createSignals(@Body() params: GatewayParams, @Res() res) {
-        console.log(params)
-        if (params.gsensor) {
-            this.gatewayService.createGensors({ gsensor: params.gsensor })
-        }
-
         if (!params.data && params.gsensor && params.mac && params.time) {
             throw new HttpException('Data, Gsensor, Mac, Signals are required', HttpStatus.BAD_REQUEST)
         }
 
-
-        let mac = await this.gatewayService.getMac(params.mac);
+        let mac = await this.gatewayService.findMac(params.mac);
 
         if (!mac) {
             throw new HttpException('Mac Mapping Address is undefined', HttpStatus.BAD_REQUEST)
         }
 
-        // move to pipes
-        let user_id = mac.id;
+        let user = mac.user;
         let device_id = mac.device_id;
 
+        if (params.rssi) {
+            let param = {
+                user: user.id,
+                mac: params.mac,
+                rssi: params.rssi,
+                timestamp: params.time[0]
+            }
+
+            this.gatewayService.createRssi(param);
+        }
+
+        // move to pipes
         let timediff = params.time[1] - params.time[0];
 
         // pad singals
@@ -37,17 +42,18 @@ export class GatewayController {
         let body = [];
         params.data.forEach(function(data, index) {
             let timestamp = params.time[0] + index * signals_rate;
-            body.push({ user: user_id, device_id, data, timestamp });
+            body.push({ user: user.id, device_id, data, timestamp });
         })
 
         // gsensor
         let gsensor_rate = timediff / params.gsensor.length;
-        let gbody =[];
+        let gbody = [];
         groupArr(params.gsensor, 3)
-        .forEach(function(value, index) {
+        .map(function(value, index) {
+            console.log("i", index)
             let timestamp = params.time[0] + index * gsensor_rate;
             let axis = { axisX: value[0], axisY: value[1], axisZ: value[2] }
-            gbody.push({ user: user_id, device_id, timestamp, ...axis });
+            gbody.push({ user: user.id, device_id, timestamp, ...axis });
         })
 
         function groupArr(data, n) {
@@ -64,8 +70,8 @@ export class GatewayController {
         }
         // move to pipes -- end
 
-        this.gatewayService.createGensors(gbody);
         this.gatewayService.createSignals(body);
+        this.gatewayService.createGensors(gbody);
 
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: "success create"});
     }

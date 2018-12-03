@@ -16,7 +16,6 @@ export class MacService {
 
   async createMac(params): Promise<Mac> {
     return await this.macRepository.save(params)
-
   }
 
   async findMacByUserId(id): Promise<Mac[]> {
