@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getConnection } from 'typeorm';
-import { Pad } from './entities/pad.entity';
+import { Ecgdata } from './entities/ecgdata.entity';
 import { Rssi } from './entities/rssi.entity';
 import { Mac } from 'src/macs/mac.entity';
 
 @Injectable()
 export class GatewayService {
   constructor(
-    @InjectRepository(Pad)
-    private readonly padRepository: Repository<Pad>,
+    @InjectRepository(Ecgdata)
+    private readonly ecgdataRepository: Repository<Ecgdata>,
     
     @InjectRepository(Rssi)
     private readonly rssiRepository: Repository<Rssi>,
@@ -18,8 +18,8 @@ export class GatewayService {
     private readonly macRepository: Repository<Mac>,
   ) {}
 
-  async createSignals(Pad): Promise<Pad> {
-    return await this.padRepository.save(Pad);
+  async createSignals(Ecgdata): Promise<Ecgdata> {
+    return await this.ecgdataRepository.save(Ecgdata);
   }
 
   async createRssi(Rssi): Promise<Rssi> {

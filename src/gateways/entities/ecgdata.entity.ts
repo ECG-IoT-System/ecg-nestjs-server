@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn
 import { User } from 'src/users/user.entity';
 
 @Entity()
-export class Pad {
+export class Ecgdata {
   @PrimaryGeneratedColumn()
   id: ObjectID;
 
