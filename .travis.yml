@@ -1,8 +1,3 @@
-sudo: required
-
-services:
-  - docker
-
 language: node_js
 node_js:
   - 8
@@ -31,6 +26,7 @@ deploy:
   project: $PROJECT_ID_PRODUCTION
   keyfile: gce.json
   verbosity: debug
+  config: app.example.yaml
   on:
-    # branch: master
+    branch: master
     node_js: 10
