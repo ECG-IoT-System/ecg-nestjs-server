@@ -4,3 +4,6 @@ node_modules
 .DS_Store
 
 ormconfig.json
+ormconfig.production.json
+ormconfig.development.json
+dist/

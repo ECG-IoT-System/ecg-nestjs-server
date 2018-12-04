@@ -2,7 +2,7 @@ import { Controller, Get, Post, Param, Query, Body } from '@nestjs/common';
 import { CoefParams } from './view-models/coef-params.model';
 import { CoefService } from './coef.service';
 import { Coef } from './coef.entity';
-import { User } from '../users/user.entity';
+import { User } from 'src/users/user.entity';
 
 @Controller()
 export class CoefController {
@@ -17,10 +17,11 @@ export class CoefController {
     findAll(): Promise<User[]> {
         return this.coefService.findAll();
     }
-
+    
     @Get('users/:id/coefs')
-    findbyUserId(@Param('id') id: string, @Query('v') version){
-        return this.coefService.findbyUserId(id, version);
+    findbyUserId(@Param('id') id: string,@Query('v') version){
+        if(version) return this.coefService.findbyUserId_version(id,version);
+        return this.coefService.findbyUserId(id);
     }
 
 }
