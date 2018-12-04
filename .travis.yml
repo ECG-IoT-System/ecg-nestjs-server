@@ -1,3 +1,8 @@
+sudo: required
+
+services:
+  - docker
+
 language: node_js
 node_js:
   - 8
@@ -27,5 +32,5 @@ deploy:
   keyfile: gce.json
   verbosity: debug
   on:
-    branch: master
-    node_js: "10"
+    # branch: master
+    node_js: 10
