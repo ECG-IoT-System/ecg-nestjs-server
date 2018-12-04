@@ -1,9 +1,7 @@
 runtime: nodejs10
 service: nestjs-server
-env: flexible
-threadsafe: true
 
-# instance_class: F4_1G
+# instance_class: F1
 # automatic_scaling:
 #   max_instances: 20
 
