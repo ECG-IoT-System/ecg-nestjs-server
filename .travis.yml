@@ -24,4 +24,6 @@ deploy:
   project: $PROJECT_ID_PRODUCTION
   keyfile: gce.json
   verbosity: debug
-  on: master
+  on:
+    branch: master
+    node_js: "10"
