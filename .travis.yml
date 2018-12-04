@@ -16,6 +16,7 @@ before_install:
   - pwd
   - ls
   - head -n 1 app.yaml
+  - cat app.yaml
 
 install:
   # build production version to dist/ folder

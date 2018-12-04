@@ -3,5 +3,4 @@ service: nestjs-server
 
 env_variables:
   NODE_PORT: 8080
-
   PRODUCTION: $PROJECT_ID_PRODUCTION
