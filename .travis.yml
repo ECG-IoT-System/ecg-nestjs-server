@@ -12,6 +12,7 @@ git:
 before_install:
   - npm i -g npm@latest
   - npm install -g typescript
+  - npm install
 
 install:
   - npm run build
