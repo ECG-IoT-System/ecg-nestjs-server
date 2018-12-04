@@ -1,6 +1,0 @@
-runtime: nodejs10
-service: nestjs-server
-
-env_variables:
-  NODE_PORT: 8080
-  DATABASE_URL: mysql://root:password@140.113.213.39:33066/mobiusdb
