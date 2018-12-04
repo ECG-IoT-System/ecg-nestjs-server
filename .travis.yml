@@ -5,12 +5,17 @@ node_js:
   - "10"
 
 before_install:
+  # decrpty key file
   - openssl aes-256-cbc -K $encrypted_623b127796c5_key -iv $encrypted_623b127796c5_iv -in gce.json.enc -out gce.json -d
+  # install dependencies
   - npm i -g npm@latest
   - npm install -g typescript
   - npm install
+  # replace environment variable
+  - envsubst < app.example.yaml > app.yaml
 
 install:
+  # build production version to dist/ folder
   - npm run build
 
 deploy:
