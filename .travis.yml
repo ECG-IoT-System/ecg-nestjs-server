@@ -15,8 +15,8 @@ before_script:
   - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
   - apt-get update && apt-get install -y google-cloud-sdk
   # config and auth gcloud
-  - echo $DEPLOY_KEY_FILE_PRODUCTION > /tmp/$CI_PIPELINE_ID.json
-  - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+  - echo $DEPLOY_KEY_FILE_PRODUCTION > /tmp/keyfile-$PROJECT_ID_PRODUCTION.json
+  - gcloud auth activate-service-account --key-file /tmp/keyfile-$PROJECT_ID_PRODUCTION.json
 
 before_install:
   - npm i -g npm@latest
