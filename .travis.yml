@@ -15,6 +15,7 @@ before_install:
   - envsubst < app.example.yaml > app.yaml
   - pwd
   - ls
+  - head -n 1 app.yaml
 
 install:
   # build production version to dist/ folder
