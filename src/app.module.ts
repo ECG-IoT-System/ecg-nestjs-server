@@ -8,9 +8,19 @@ import { MacModule } from './macs/mac.module';
 import { CoefModule } from './coefs/coef.module';
 import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
 
+const dbUrl = new URL(process.env.DATABASE_URL);
+
 @Module({
   imports: [
-    TypeOrmModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: dbUrl.hostname,
+      port: parseInt(dbUrl.port),
+      username: dbUrl.username,
+      database: dbUrl.pathname,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
     UserModule,
     GatewayModule,
     MacModule,

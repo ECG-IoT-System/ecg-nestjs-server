@@ -1,9 +1,16 @@
-node_modules
 *.swo
 *.swp
 .DS_Store
 
+node_modules
+dist
+
+
+
+# key file
+env
+app.yaml
+gce.json
 ormconfig.json
 ormconfig.production.json
 ormconfig.development.json
-dist/
