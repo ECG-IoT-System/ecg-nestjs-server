@@ -16,9 +16,6 @@ before_install:
 
 install:
   - npm run build
-  - cp ormconfig.example.json ormconfig.json
-  - sed -i "s/original/new/g" file.txt
-  - echo $ORMCONFIG_KEY_FILE_PRODUCTION > ormconfig.json
 
 deploy:
   provider: script
