@@ -11,11 +11,7 @@ import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 
-// let socketPath = dbUrl.searchParams.get('socketPath');
-// let extra: any = { }
-// if (socketPath) {
-//   extra.socketPath = socketPath;
-// }
+
 
 @Module({
   imports: [
@@ -27,7 +23,7 @@ const dbUrl = new URL(process.env.DATABASE_URL);
       password: dbUrl.password,
       database: dbUrl.pathname.slice(1),
       extra: {
-        socketPath: dbUrl.searchParams.get('socketPath')
+        socketPath: "/cloudsql/" + dbUrl.searchParams.get('socketPath')
       },
       logging: false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
