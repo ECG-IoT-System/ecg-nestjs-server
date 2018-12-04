@@ -21,3 +21,8 @@ src/
 
 # test
 test/
+
+# keyfile
+env
+gce.json
+gce.json.enc

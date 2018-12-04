@@ -1,23 +1,21 @@
 language: node_js
 node_js:
-  - "8"
-  - "9"
-  - "10"
-
+- '8'
+- '9'
+- '10'
 before_install:
-  - openssl aes-256-cbc -K $encrypted_623b127796c5_key -iv $encrypted_623b127796c5_iv -in gce.json.enc -out gce.json -d
-  - npm i -g npm@latest
-  - npm install -g typescript
-  - npm install
-
+- openssl aes-256-cbc -K $encrypted_623b127796c5_key -iv $encrypted_623b127796c5_iv
+  -in gce.json.enc -out gce.json -d
+- npm i -g npm@latest
+- npm install -g typescript
+- npm install
 install:
-  - npm run build
-
+- npm run build
 deploy:
   provider: gae
-  project: $PROJECT_ID_PRODUCTION
+  project: "$PROJECT_ID_PRODUCTION"
   keyfile: gce.json
   verbosity: debug
   on:
     branch: master
-    node_js: "10"
+    node_js: '10'
