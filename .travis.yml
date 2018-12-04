@@ -4,11 +4,6 @@ node_js:
   - 9
   - 10
 
-before_script:
-  # replace environment variable
-  - cp app.example.yaml app.yaml
-  - envsubst < app.yaml > app.yaml
-
 before_install:
   # decrpty key file
   - openssl aes-256-cbc -K $encrypted_623b127796c5_key -iv $encrypted_623b127796c5_iv -in gce.json.enc -out gce.json -d
@@ -21,6 +16,11 @@ install:
   # build production version to dist/ folder
   - npm run build
 
+before_deploy:
+  # replace environment variable
+  - cp app.example.yaml app.yaml
+  - envsubst < app.yaml > app.yaml
+
 deploy:
   provider: gae
   project: $PROJECT_ID_PRODUCTION
@@ -30,3 +30,5 @@ deploy:
   on:
     branch: master
     node_js: 10
+
+after_deploy:
