@@ -7,6 +7,7 @@ import { GatewayModule } from './gateways/gateway.module';
 import { MacModule } from './macs/mac.module';
 import { CoefModule } from './coefs/coef.module';
 import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
+import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 
@@ -17,7 +18,8 @@ const dbUrl = new URL(process.env.DATABASE_URL);
       host: dbUrl.hostname,
       port: parseInt(dbUrl.port),
       username: dbUrl.username,
-      database: dbUrl.pathname,
+      password: dbUrl.password,
+      database: dbUrl.pathname.slice(1),
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
