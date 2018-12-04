@@ -1,0 +1,34 @@
+language: node_js
+node_js:
+  - "8"
+  - "9"
+  - "10"
+cache:
+  directories:
+    - "node_modules"
+git:
+  depth: 5
+
+before_script:
+  # install gcloud sdk
+  - echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | tee /etc/apt/sources.list.d/google-cloud-sdk.list
+  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+  - apt-get update && apt-get install -y google-cloud-sdk
+  # config and auth gcloud
+  - echo $DEPLOY_KEY_FILE_PRODUCTION > /tmp/$CI_PIPELINE_ID.json
+  - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+
+before_install:
+  - npm i -g npm@latest
+install:
+  - npm run build
+  - echo $ORMCONFIG_KEY_FILE_PRODUCTION > ormconfig.json
+
+deploy:
+  - provider: script
+    # Have to use `&&` because of issue https://github.com/travis-ci/dpl/issues/673
+    script: gcloud app deploy app.yaml --quiet --verbosity=debug --project=$PROJECT_ID_PRODUCTION
+    skip_cleanup: true
+    on:
+      branch: master
+      node_js: "10"
