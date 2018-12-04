@@ -1,6 +1,10 @@
 runtime: nodejs10
 service: nestjs-server
 
+instance_class: F4_1G
+automatic_scaling:
+  max_instances: 20
+
 env_variables:
   NODE_PORT: 8080
   DATABASE_URL: $DATABASE_URL
