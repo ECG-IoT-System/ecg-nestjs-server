@@ -13,6 +13,7 @@ before_install:
   - npm install
   # replace environment variable
   - envsubst < app.example.yaml > app.yaml
+  - pwd
   - ls
 
 install:
