@@ -11,8 +11,6 @@ import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 
-
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({

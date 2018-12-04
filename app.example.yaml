@@ -1,4 +1,5 @@
-runtime: nodejs10
+runtime: nodejs8
+env: flex
 service: nestjs-server
 
 # instance_class: F1
