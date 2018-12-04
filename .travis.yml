@@ -9,12 +9,10 @@ cache:
 git:
   depth: 5
 
-before_script:
-  # config and auth gcloud
-  
-
 before_install:
   - npm i -g npm@latest
+  - npm install -g typescript
+
 install:
   - npm run build
   - cp ormconfig.example.json ormconfig.json
