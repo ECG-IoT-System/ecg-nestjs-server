@@ -21,14 +21,15 @@ const dbUrl = new URL(process.env.DATABASE_URL);
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: dbUrl.hostname,
-      port: parseInt(dbUrl.port),
+      // host: dbUrl.hostname,
+      // port: parseInt(dbUrl.port),
       username: dbUrl.username,
       password: dbUrl.password,
       database: dbUrl.pathname.slice(1),
       extra: {
         socketPath: dbUrl.searchParams.get('socketPath')
       },
+      logging: false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
