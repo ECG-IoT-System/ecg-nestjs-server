@@ -11,4 +11,4 @@ env_variables:
   DATABASE_URL: $DATABASE_URL
 
 beta_settings:
- cloud_sql_instances: ecgproject-1069:us-central1:ae86
+  cloud_sql_instances: ecgproject-1069:us-central1:ae86

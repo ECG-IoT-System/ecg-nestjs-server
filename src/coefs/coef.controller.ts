@@ -17,10 +17,10 @@ export class CoefController {
     findAll(): Promise<User[]> {
         return this.coefService.findAll();
     }
-    
+
     @Get('users/:id/coefs')
-    findbyUserId(@Param('id') id: string,@Query('v') version){
-        if(version) return this.coefService.findbyUserId_version(id,version);
+    findbyUserId(@Param('id') id: string, @Query('v') version){
+        if (version) return this.coefService.findbyUserId_version(id, version);
         return this.coefService.findbyUserId(id);
     }
 

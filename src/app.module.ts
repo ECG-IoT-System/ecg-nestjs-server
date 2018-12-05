@@ -10,12 +10,8 @@ import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
 import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
-
-let socketPath = dbUrl.searchParams.get('socketPath')
-let extra: any = { }
-if (socketPath) {
-  extra = { socketPath: "/cloudsql/" + dbUrl.searchParams.get('socketPath') }
-}
+const socketPath = dbUrl.searchParams.get('socketPath');
+const extra: any = (socketPath) ? { socketPath } : {};
 
 @Module({
   imports: [

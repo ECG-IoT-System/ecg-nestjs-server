@@ -6,13 +6,13 @@ try {
   const testFolder = '/cloudsql/';
   const fs = require('fs');
 
-  console.log("---cloudsql----")
+  console.log('---cloudsql----');
   fs.readdirSync(testFolder).forEach(file => {
     console.log(file);
-  })
+  });
 }
 catch {
-  console.log("---cloudsql error----")
+  console.log('---cloudsql error----');
 }
 
 async function bootstrap() {
