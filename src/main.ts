@@ -2,17 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cors from 'cors';
 
-try {
-  const testFolder = '/cloudsql/';
-  const fs = require('fs');
-
-  console.log('---cloudsql----');
-  fs.readdirSync(testFolder).forEach(file => {
-    console.log(file);
+// check if cloud sql exist
+import * as fs from 'fs';
+const cloudSqlFolder = '/cloudsql/';
+if (fs.existsSync(cloudSqlFolder)) {
+  fs.readdirSync(cloudSqlFolder).forEach(file => {
+    global.console.debug('DEBUG: Check Cloud SQL File /cloudsql/' + file);
   });
 }
-catch {
-  console.log('---cloudsql error----');
+else {
+  global.console.debug('DEBUG: Cloud SQL File /cloudsql does not exist');
 }
 
 async function bootstrap() {

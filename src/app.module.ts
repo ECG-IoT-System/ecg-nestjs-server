@@ -18,7 +18,7 @@ const extra: any = (socketPath) ? { socketPath } : {};
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: dbUrl.hostname,
-      port: parseInt(dbUrl.port),
+      port: parseInt(dbUrl.port, 10),
       username: dbUrl.username,
       password: dbUrl.password,
       database: dbUrl.pathname.slice(1),
