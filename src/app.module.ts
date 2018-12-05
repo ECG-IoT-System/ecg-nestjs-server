@@ -11,18 +11,19 @@ import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 const socketPath = dbUrl.searchParams.get('socketPath');
-const extra: any = (socketPath) ? { socketPath } : {};
+const params: any = (socketPath) ? {extra: {socketPath}} : {
+host: dbUrl.hostname,
+  port: parseInt(dbUrl.port),
+};
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: dbUrl.hostname,
-      port: parseInt(dbUrl.port),
+      ...params,
       username: dbUrl.username,
       password: dbUrl.password,
       database: dbUrl.pathname.slice(1),
-      extra,
       logging: false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
