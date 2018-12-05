@@ -11,6 +11,12 @@ import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 
+let socketPath = dbUrl.searchParams.get('socketPath')
+let extra: any = { }
+if (socketPath) {
+  extra = { socketPath: "/cloudsql/" + dbUrl.searchParams.get('socketPath') }
+}
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -20,9 +26,7 @@ const dbUrl = new URL(process.env.DATABASE_URL);
       username: dbUrl.username,
       password: dbUrl.password,
       database: dbUrl.pathname.slice(1),
-      extra: {
-        socketPath: "/cloudsql/" + dbUrl.searchParams.get('socketPath')
-      },
+      extra,
       logging: false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

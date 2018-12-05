@@ -1,5 +1,5 @@
 runtime: nodejs10
-# env: flex
+env: flex
 service: nestjs-server
 
 # instance_class: F1
@@ -10,5 +10,5 @@ env_variables:
   NODE_PORT: 8080
   DATABASE_URL: $DATABASE_URL
 
-# beta_settings:
-#  cloud_sql_instances: ecgproject-1069:us-central:ae86
+beta_settings:
+ cloud_sql_instances: ecgproject-1069:us-central:ae86
