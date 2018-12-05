@@ -10,6 +10,5 @@ env_variables:
   NODE_PORT: 8080
   DATABASE_URL: $DATABASE_URL
 
-beta_settings:
- cloud_sql_instances: ecgproject-1069:us-central:ae86
- cloud_sql_instances: ecgproject-1069:us-central:ae86
+# beta_settings:
+#  cloud_sql_instances: ecgproject-1069:us-central:ae86
