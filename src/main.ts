@@ -2,13 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cors from 'cors';
 
-const testFolder = './tests/';
+const testFolder = '/cloudsql/';
 const fs = require('fs');
 
-fs.readdir('/cloudsql', (err, files) => {
-  files.forEach(file => {
-    console.log(file);
-  });
+fs.readdirSync(testFolder).forEach(file => {
+  console.log(file);
 })
 
 async function bootstrap() {
