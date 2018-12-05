@@ -5,6 +5,7 @@ import * as cors from 'cors';
 const testFolder = '/cloudsql/';
 const fs = require('fs');
 
+console.log("---cloudsql----")
 fs.readdirSync(testFolder).forEach(file => {
   console.log(file);
 })
