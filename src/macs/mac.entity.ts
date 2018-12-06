@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn, Index } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn, Index ,ObjectIdColumn} from 'typeorm';
 import { User } from '../users/user.entity';
 
 @Entity()
 export class Mac {
   @PrimaryGeneratedColumn()
+  //@ObjectIdColumn()
   id: ObjectID;
 
   @ManyToOne(type => User, user => user.id)

@@ -11,22 +11,22 @@ import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 const socketPath = dbUrl.searchParams.get('socketPath');
-const extra: any = (socketPath) ? { socketPath } : {};
+const dbConfig: any = {
+  type: dbUrl.protocol.slice(0,dbUrl.protocol.length-1),
+  host: dbUrl.hostname,
+  port: parseInt(dbUrl.port, 10),
+  username: dbUrl.username,
+  password: dbUrl.password,
+  database: dbUrl.pathname.slice(1),
+  logging: false,
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  synchronize: true,
+}
+if(socketPath) dbConfig.extra = { socketPath };
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: dbUrl.hostname,
-      port: parseInt(dbUrl.port, 10),
-      username: dbUrl.username,
-      password: dbUrl.password,
-      database: dbUrl.pathname.slice(1),
-      extra,
-      logging: false,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(dbConfig),
     UserModule,
     GatewayModule,
     MacModule,

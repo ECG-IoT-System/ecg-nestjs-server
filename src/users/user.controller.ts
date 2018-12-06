@@ -7,7 +7,7 @@ import { Ecgdata } from '../gateways/entities/ecgdata.entity';
 
 @Controller()
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(private readonly userService: UserService) { }
 
     @Get('users')
     findAll(@Query('username') username?: string): Promise<User[]> {
@@ -20,7 +20,7 @@ export class UserController {
 
     @Get('users/:id')
     findOne(@Param('id') id: string): Promise<User> {
-      return this.userService.findOne(id);
+        return this.userService.findOne(id);
     }
 
     @Get('users/:id/ecgdata')
@@ -29,13 +29,14 @@ export class UserController {
         @Query('from') from: string,
         @Query('to') to?: string,
         @Query('limit') limit?: string,
-        ): Promise<Ecgdata[]> {
+    ): Promise<Ecgdata[]> {
 
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
 
-        if (to) return this.userService.findEcgdataByUser({ user_id: id, timestamp: Between(from, to) });
+        //if (to) return this.userService.findEcgdataByUser({ user_id: id, timestamp: Between(from, to) });
+        if (to) return this.userService.findEcgdataByUser(id, from, to);
 
-        return this.userService.findEcgdataByUser({ user_id: id, timestamp: MoreThan(from), take: limit || 2304 });
+        return this.userService.findEcgdataByUser_limit(id, from,limit || 2304);
     }
 
     @Post('users')

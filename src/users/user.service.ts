@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { Ecgdata } from '../gateways/entities/ecgdata.entity';
 import { Mac } from '../macs/mac.entity';
+import { Between, MoreThan } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -34,12 +35,27 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async findEcgdataByUser(query): Promise<Ecgdata[]> {
-    query.order = { timestamp: 'ASC' };
-    return await this.ecgdataRepository.find(query);
+  // async findEcgdataByUser(query): Promise<Ecgdata[]> {
+  //   query.order = { timestamp: 'ASC' };
+  //   return await this.ecgdataRepository.find(query);
+  // }
+  async findEcgdataByUser(id,from,to): Promise<Ecgdata[]> {
+    return await this.ecgdataRepository.find({
+      where:{
+        timestamp:Between(from,to),
+        user:id,
+      },
+      order : { timestamp: 'ASC' },
+    });  
   }
-
-  async findEcgdata12ByUser(user): Promise<User> {
-    return await this.userRepository.save(user);
+  async findEcgdataByUser_limit(id,from,limit): Promise<Ecgdata[]> {
+      return await this.ecgdataRepository.find({
+    where:{
+      timestamp:MoreThan(from),
+      user:id,
+    },
+    order : { timestamp: 'ASC' },
+    take : limit,
+  });    
   }
 }

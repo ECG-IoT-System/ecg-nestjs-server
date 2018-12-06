@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectID, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ObjectID, OneToMany,ObjectIdColumn } from 'typeorm';
 import { Ecgdata } from '../gateways/entities/ecgdata.entity';
 import { Mac } from '../macs/mac.entity';
 import { Coef } from '../coefs/coef.entity';
@@ -9,6 +9,7 @@ import { Rssi } from '../gateways/entities/rssi.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
+  //@ObjectIdColumn()
   id: ObjectID;
 
   @Column({ unique: true })

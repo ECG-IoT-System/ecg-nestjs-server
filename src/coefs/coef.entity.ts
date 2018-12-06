@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn ,ObjectIdColumn} from 'typeorm';
 import { User } from '../users/user.entity';
 
 @Entity()
 export class Coef {
   @PrimaryGeneratedColumn()
+  //@ObjectIdColumn()
   id: ObjectID;
 
   @ManyToOne(type => User, user => user.id)
