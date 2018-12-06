@@ -12,7 +12,7 @@ import { URL } from 'url';
 const dbUrl = new URL(process.env.DATABASE_URL);
 const socketPath = dbUrl.searchParams.get('socketPath');
 const dbConfig: any = {
-  type: dbUrl.protocol,
+  type: dbUrl.protocol.slice(0,dbUrl.protocol.length-1),
   host: dbUrl.hostname,
   port: parseInt(dbUrl.port, 10),
   username: dbUrl.username,
