@@ -4,12 +4,15 @@ import { User } from '../users/user.entity';
 import { UserParams } from './view-models/user-params.model';
 import { Between, MoreThan } from 'typeorm';
 import { Ecgdata } from '../gateways/entities/ecgdata.entity';
+import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags(User.name)
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
     @Get('users')
+    @ApiImplicitQuery({ name: 'username', required: false })
     findAll(@Query('username') username?: string): Promise<User[]> {
         if (username) {
             return this.userService.findByUsername(username);

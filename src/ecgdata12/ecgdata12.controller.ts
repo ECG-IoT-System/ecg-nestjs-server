@@ -1,8 +1,11 @@
 import { Controller, Post, Param, Body } from '@nestjs/common';
 import { Ecgdata12Service } from './ecgdata12.service';
 import { Ecgdata12Params } from './view-models/ecgdata12-params.model';
+import { ApiUseTags } from '@nestjs/swagger';
+import { Ecgdata12 } from './ecgdata12.entity';
 
 @Controller()
+@ApiUseTags(Ecgdata12.name)
 export class Ecgdata12Controller {
     constructor(private readonly ecgdata12Service: Ecgdata12Service) {}
 

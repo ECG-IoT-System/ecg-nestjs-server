@@ -3,8 +3,10 @@ import { CoefParams } from './view-models/coef-params.model';
 import { CoefService } from './coef.service';
 import { Coef } from './coef.entity';
 import { User } from 'src/users/user.entity';
+import { ApiUseTags } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags(Coef.name)
 export class CoefController {
     constructor(private readonly coefService: CoefService) {}
 

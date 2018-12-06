@@ -2,8 +2,10 @@ import { Controller, Get, Post, Param, Query, Body } from '@nestjs/common';
 import { MacParams } from './view-models/mac-params.model';
 import { MacService } from './mac.service';
 import { Mac } from './mac.entity';
+import { ApiUseTags } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags(Mac.name)
 export class MacController {
     constructor(private readonly macService: MacService) {}
 

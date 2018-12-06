@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { GatewayParams } from './view-models/gateway-params.model';
+import { ApiUseTags } from '@nestjs/swagger';
 
 @Controller()
+@ApiUseTags('Gateway')
 export class GatewayController {
     constructor(
         private readonly gatewayService: GatewayService,
