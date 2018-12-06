@@ -10,23 +10,24 @@ import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
 import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
+const dbConfig: any = {
+  type: dbUrl.protocol,
+  host: dbUrl.hostname,
+  port: parseInt(dbUrl.port, 10),
+  username: dbUrl.username,
+  password: dbUrl.password,
+  database: dbUrl.pathname.slice(1),
+  logging: false,
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  synchronize: true,
+}
+
 const socketPath = dbUrl.searchParams.get('socketPath');
-const extra: any = (socketPath) ? { socketPath } : {};
+if (socketPath) dbConfig.extra = { socketPath }
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: dbUrl.hostname,
-      port: parseInt(dbUrl.port, 10),
-      username: dbUrl.username,
-      password: dbUrl.password,
-      database: dbUrl.pathname.slice(1),
-      extra,
-      logging: false,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(dbConfig),
     UserModule,
     GatewayModule,
     MacModule,
