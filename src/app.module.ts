@@ -12,7 +12,7 @@ import { URL } from 'url';
 const dbUrl = new URL(process.env.DATABASE_URL);
 const socketPath = dbUrl.searchParams.get('socketPath');
 const dbConfig: any = {
-  type: dbUrl.protocol.slice(0,dbUrl.protocol.length-1),
+  type: dbUrl.protocol,
   host: dbUrl.hostname,
   port: parseInt(dbUrl.port, 10),
   username: dbUrl.username,
@@ -22,7 +22,8 @@ const dbConfig: any = {
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: true,
 }
-if(socketPath) dbConfig.extra = { socketPath };
+
+if (socketPath) dbConfig.extra = { socketPath }
 
 @Module({
   imports: [
