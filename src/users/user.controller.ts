@@ -2,8 +2,6 @@ import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus } 
 import { UserService } from './user.service';
 import { User } from '../users/user.entity';
 import { UserParams } from './view-models/user-params.model';
-import { Between, MoreThan } from 'typeorm';
-import { Ecgdata } from '../ecgdata/entities/ecgdata.entity';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 
 @Controller()

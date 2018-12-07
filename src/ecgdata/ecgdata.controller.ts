@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { EcgdataService } from './ecgdata.service';
 import { EcgdataParams } from './view-models/ecgdata-params.model';
-import { ApiUseTags } from '@nestjs/swagger';
+import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { Ecgdata } from './entities/ecgdata.entity';
 
 @Controller()
@@ -12,6 +12,8 @@ export class EcgdataController {
         ) {}
 
     @Get('users/:id/ecgdata')
+    @ApiImplicitQuery({ name: 'to', required: false })
+    @ApiImplicitQuery({ name: 'limit', required: false })
     async findUserEcgdata(
         @Param('id') id: string,
         @Query('from') from: string,

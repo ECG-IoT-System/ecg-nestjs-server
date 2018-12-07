@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 
 export class UserParams {
-    @ApiModelProperty()
+    @ApiModelProperty({ example: 'akii' })
     username: string;
 }

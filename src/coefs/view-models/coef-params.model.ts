@@ -1,18 +1,18 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 
 export class CoefParams {
-    @ApiModelProperty()
+    @ApiModelProperty({ example: 1})
     version: number;
 
     @ApiModelProperty()
     description: string;
 
-    @ApiModelProperty()
+    @ApiModelProperty({ example: "12345" })
     F: string;
 
-    @ApiModelProperty()
+    @ApiModelProperty({ example: "23456" })
     K: string;
 
-    @ApiModelProperty()
+    @ApiModelProperty({ example: "12345" })
     HH: string;
 }

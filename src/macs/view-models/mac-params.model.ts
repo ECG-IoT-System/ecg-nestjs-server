@@ -1,9 +1,9 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 
 export class MacParams {
-    @ApiModelProperty()
+    @ApiModelProperty({ example: 'ab12cd34ef57' })
     mac: string;
 
-    @ApiModelProperty()
+    @ApiModelProperty({ example: '1', minimum: 1, maximum: 3 })
     device_id: number;
 }
