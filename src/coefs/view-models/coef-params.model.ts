@@ -7,12 +7,12 @@ export class CoefParams {
     @ApiModelProperty()
     description: string;
 
-    @ApiModelProperty({ example: "12345" })
+    @ApiModelProperty({ example: '12345' })
     F: string;
 
-    @ApiModelProperty({ example: "23456" })
+    @ApiModelProperty({ example: '23456' })
     K: string;
 
-    @ApiModelProperty({ example: "12345" })
+    @ApiModelProperty({ example: '12345' })
     HH: string;
 }
