@@ -35,27 +35,4 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  // async findEcgdataByUser(query): Promise<Ecgdata[]> {
-  //   query.order = { timestamp: 'ASC' };
-  //   return await this.ecgdataRepository.find(query);
-  // }
-  async findEcgdataByUser(id,from,to): Promise<Ecgdata[]> {
-    return await this.ecgdataRepository.find({
-      where:{
-        timestamp:Between(from,to),
-        user:id,
-      },
-      order : { timestamp: 'ASC' },
-    });  
-  }
-  async findEcgdataByUser_limit(id,from,limit): Promise<Ecgdata[]> {
-      return await this.ecgdataRepository.find({
-    where:{
-      timestamp:MoreThan(from),
-      user:id,
-    },
-    order : { timestamp: 'ASC' },
-    take : limit,
-  });    
-  }
 }

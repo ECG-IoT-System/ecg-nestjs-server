@@ -11,6 +11,18 @@ export class EcgdataController {
         private readonly ecgdataService: EcgdataService,
         ) {}
 
+    @Get('users/:id/ecgdata')
+    async findUserEcgdata(
+        @Param('id') id: string,
+        @Query('from') from: string,
+        @Query('to') to?: string,
+        @Query('limit') limit?: string,
+    ): Promise<Ecgdata[]> {
+        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
+
+        return this.ecgdataService.findEcgdataByUser({ id, from, to, limit });
+    }
+
     @Post('ecgdata')
     async createEcgdata(@Body() params: EcgdataParams, @Res() res) {
         if (!params.data && params.gsensor && params.mac && params.time) {

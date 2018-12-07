@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection } from 'typeorm';
+import { Repository, getConnection, Between, MoreThan } from 'typeorm';
 import { Ecgdata } from './entities/ecgdata.entity';
 import { Gsensor } from './entities/gsensor.entity';
 import { Mac } from '../macs/mac.entity';
@@ -20,7 +20,7 @@ export class EcgdataService {
 
     @InjectRepository(Mac)
     private readonly macRepository: Repository<Mac>,
-  ) {}
+  ) { }
 
   async createEcgdata(params): Promise<Ecgdata[]> {
     return await this.ecgdataRepository.save(params);
@@ -36,5 +36,22 @@ export class EcgdataService {
 
   async findMac(mac: string): Promise<Mac> {
     return await this.macRepository.findOne({ where: { mac }, relations: ['user'] });
+  }
+
+  async findEcgdataByUser(params): Promise<Ecgdata[]> {
+    const query: any = {
+      where: { user: params.id },
+      order: { timestamp: 'ASC' },
+    };
+
+    if (query.to) {
+      query.where.timestamp = Between(params.from, params.to);
+    }
+    else {
+      query.where.timestamp = MoreThan(params.from);
+      query.take = params.limit || 2304;
+    }
+
+    return await this.ecgdataRepository.find(query);
   }
 }

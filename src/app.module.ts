@@ -21,9 +21,9 @@ const dbConfig: any = {
   logging: false,
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: true,
-}
+};
 
-if (socketPath) dbConfig.extra = { socketPath }
+if (socketPath) dbConfig.extra = { socketPath };
 
 @Module({
   imports: [

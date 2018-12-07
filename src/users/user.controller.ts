@@ -36,10 +36,10 @@ export class UserController {
 
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
 
-        //if (to) return this.userService.findEcgdataByUser({ user_id: id, timestamp: Between(from, to) });
+        // if (to) return this.userService.findEcgdataByUser({ user_id: id, timestamp: Between(from, to) });
         if (to) return this.userService.findEcgdataByUser(id, from, to);
 
-        return this.userService.findEcgdataByUser_limit(id, from,limit || 2304);
+        return this.userService.findEcgdataByUser_limit(id, from, limit || 2304);
     }
 
     @Post('users')

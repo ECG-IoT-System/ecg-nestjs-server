@@ -9,7 +9,7 @@ import { Rssi } from '../ecgdata/entities/rssi.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  //@ObjectIdColumn()
+  // @ObjectIdColumn()
   id: ObjectID;
 
   @Column({ unique: true })
