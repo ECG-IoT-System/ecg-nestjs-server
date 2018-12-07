@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectID, OneToMany,ObjectIdColumn } from 'typeorm';
-import { Ecgdata } from '../gateways/entities/ecgdata.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ObjectID, OneToMany } from 'typeorm';
+import { Ecgdata } from '../ecgdata/entities/ecgdata.entity';
 import { Mac } from '../macs/mac.entity';
 import { Coef } from '../coefs/coef.entity';
-import { Gsensor } from '../gateways/entities/gsensor.entity';
+import { Gsensor } from '../ecgdata/entities/gsensor.entity';
 import { Ecgdata12 } from '../ecgdata12/ecgdata12.entity';
-import { Rssi } from '../gateways/entities/rssi.entity';
+import { Rssi } from '../ecgdata/entities/rssi.entity';
 
 @Entity()
 export class User {

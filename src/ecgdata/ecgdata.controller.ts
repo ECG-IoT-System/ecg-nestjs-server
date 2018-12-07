@@ -1,22 +1,23 @@
 import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
-import { GatewayService } from './gateway.service';
-import { GatewayParams } from './view-models/gateway-params.model';
+import { EcgdataService } from './ecgdata.service';
+import { EcgdataParams } from './view-models/ecgdata-params.model';
 import { ApiUseTags } from '@nestjs/swagger';
+import { Ecgdata } from './entities/ecgdata.entity';
 
 @Controller()
-@ApiUseTags('Gateway')
-export class GatewayController {
+@ApiUseTags(Ecgdata.name)
+export class EcgdataController {
     constructor(
-        private readonly gatewayService: GatewayService,
+        private readonly ecgdataService: EcgdataService,
         ) {}
 
     @Post('ecgdata')
-    async createEcgdata(@Body() params: GatewayParams, @Res() res) {
+    async createEcgdata(@Body() params: EcgdataParams, @Res() res) {
         if (!params.data && params.gsensor && params.mac && params.time) {
             throw new HttpException('Data, Gsensor, Mac, Signals are required', HttpStatus.BAD_REQUEST);
         }
 
-        const mac = await this.gatewayService.findMac(params.mac);
+        const mac = await this.ecgdataService.findMac(params.mac);
 
         if (!mac) {
             throw new HttpException('Mac Mapping Address is undefined', HttpStatus.BAD_REQUEST);
@@ -33,7 +34,7 @@ export class GatewayController {
                 timestamp: params.time[0],
             };
 
-            this.gatewayService.createRssi(param);
+            this.ecgdataService.createRssi(param);
         }
 
         // move to pipes
@@ -71,8 +72,8 @@ export class GatewayController {
         }
         // move to pipes -- end
 
-        this.gatewayService.createEcgdata(body);
-        this.gatewayService.createGensors(gbody);
+        this.ecgdataService.createEcgdata(body);
+        this.ecgdataService.createGensors(gbody);
 
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
     }

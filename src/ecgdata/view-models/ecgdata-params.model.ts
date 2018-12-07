@@ -1,6 +1,6 @@
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
-export class GatewayParams {
+export class EcgdataParams {
     @ApiModelProperty()
     mac: string;
 

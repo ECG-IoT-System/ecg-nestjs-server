@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './users/user.module';
-import { GatewayModule } from './gateways/gateway.module';
+import { EcgdataModule } from './ecgdata/ecgdata.module';
 import { MacModule } from './macs/mac.module';
 import { CoefModule } from './coefs/coef.module';
 import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
@@ -29,9 +29,9 @@ if (socketPath) dbConfig.extra = { socketPath }
   imports: [
     TypeOrmModule.forRoot(dbConfig),
     UserModule,
-    GatewayModule,
     MacModule,
     CoefModule,
+    EcgdataModule,
     Ecgdata12Module,
   ],
   controllers: [AppController],

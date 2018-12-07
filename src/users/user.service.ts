@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { Ecgdata } from '../gateways/entities/ecgdata.entity';
+import { Ecgdata } from '../ecgdata/entities/ecgdata.entity';
 import { Mac } from '../macs/mac.entity';
 import { Between, MoreThan } from 'typeorm';
 

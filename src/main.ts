@@ -8,7 +8,7 @@ import * as fs from 'fs';
 const cloudSqlFolder = '/cloudsql/';
 if (fs.existsSync(cloudSqlFolder)) {
   fs.readdirSync(cloudSqlFolder).forEach(file => {
-    global.console.debug('DEBUG: Check Cloud SQL File /cloudsql/' + file);
+    global.console.debug('DEBUG: Detect Cloud SQL File /cloudsql/' + file);
   });
 }
 else {

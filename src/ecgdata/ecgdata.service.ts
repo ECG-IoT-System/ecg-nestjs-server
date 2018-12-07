@@ -7,7 +7,7 @@ import { Mac } from '../macs/mac.entity';
 import { Rssi } from './entities/rssi.entity';
 
 @Injectable()
-export class GatewayService {
+export class EcgdataService {
   constructor(
     @InjectRepository(Ecgdata)
     private readonly ecgdataRepository: Repository<Ecgdata>,
