@@ -34,5 +34,4 @@ export class UserService {
   async createOne(user): Promise<User> {
     return await this.userRepository.save(user);
   }
-
 }
