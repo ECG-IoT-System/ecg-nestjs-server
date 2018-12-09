@@ -10,6 +10,10 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Mac)
+    private readonly macRepository: Repository<Mac>,
+    @InjectRepository(User)
+    private readonly EcgdataRepository: Repository<Ecgdata>,
   ) { }
 
   async findAll(): Promise<User[]> {
