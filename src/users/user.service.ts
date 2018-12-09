@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { Ecgdata } from '../ecgdata/entities/ecgdata.entity';
 import { Mac } from '../macs/mac.entity';
-import { Ecgdata12 } from 'src/ecgdata12/ecgdata12.entity';
+import { Ecgdata12 } from '../ecgdata12/ecgdata12.entity';
 
 @Injectable()
 export class UserService {
