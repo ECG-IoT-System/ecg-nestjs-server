@@ -15,7 +15,7 @@ export class MacController {
     }
 
     @Post('users/:id/macs')
-    createMac(@Param('id') id: string, @Body() params: MacParams): Promise<Mac> {
+    createMacbyId(@Param('id') id: string, @Body() params: MacParams): Promise<Mac> {
         return this.macService.createMac({ ...params, user: id });
     }
 }

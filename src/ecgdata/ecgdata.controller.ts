@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { EcgdataService } from './ecgdata.service';
+import { UserService } from '../users/user.service'
 import { EcgdataParams } from './view-models/ecgdata-params.model';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { Ecgdata } from './entities/ecgdata.entity';
@@ -9,6 +10,7 @@ import { Ecgdata } from './entities/ecgdata.entity';
 export class EcgdataController {
     constructor(
         private readonly ecgdataService: EcgdataService,
+        private readonly userService: UserService,
         ) {}
 
     @Get('users/:id/ecgdata')
@@ -21,7 +23,7 @@ export class EcgdataController {
         @Query('limit') limit?: string,
     ): Promise<Ecgdata[]> {
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-
+        
         return this.ecgdataService.findEcgdataByUser({ id, from, to, limit });
     }
 
@@ -36,7 +38,7 @@ export class EcgdataController {
         if (!mac) {
             throw new HttpException('Mac Mapping Address is undefined', HttpStatus.BAD_REQUEST);
         }
-
+        console.log(params);
         const user = mac.user;
         const device_id = mac.device_id;
 
@@ -88,6 +90,9 @@ export class EcgdataController {
 
         this.ecgdataService.createEcgdata(body);
         this.ecgdataService.createGensors(gbody);
+
+        this.userService.updateLasttime({id:user.id,lasttime:params.time[1]})
+        
 
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
     }

@@ -31,6 +31,7 @@ export class EcgdataService {
   }
 
   async createRssi(param): Promise<Rssi> {
+    console.log(param);
     return await this.rssiRepository.save(param);
   }
 
@@ -44,7 +45,7 @@ export class EcgdataService {
       order: { timestamp: 'ASC' },
     };
 
-    if (query.to) {
+    if (params.to) {
       query.where.timestamp = Between(params.from, params.to);
     }
     else {
@@ -54,4 +55,5 @@ export class EcgdataService {
 
     return await this.ecgdataRepository.find(query);
   }
+  
 }

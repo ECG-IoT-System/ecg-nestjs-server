@@ -15,6 +15,15 @@ export class User {
   @Column({ unique: true })
   username: string;
 
+  @Column({ type: 'double' })
+  lasttime: number;
+
+  @Column({ type: 'double' })
+  lasttime_12L: number;
+
+  @Column({ type: 'double' })
+  lasttime_afstat: number;
+
   @OneToMany(type => Ecgdata, ecgdaton => ecgdaton.user)
   ecgdata: Ecgdata[];
 
