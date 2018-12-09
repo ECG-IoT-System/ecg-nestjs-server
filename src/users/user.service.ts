@@ -2,22 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { Ecgdata } from '../ecgdata/entities/ecgdata.entity';
-import { Mac } from '../macs/mac.entity';
-import { Ecgdata12 } from '../ecgdata12/ecgdata12.entity';
+
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    @InjectRepository(Mac)
-    private readonly macRepository: Repository<Mac>,
-    @InjectRepository(Ecgdata)
-    private readonly EcgdataRepository: Repository<Ecgdata>,
-    @InjectRepository(Ecgdata12)
-    private readonly Ecgdata12Repository: Repository<Ecgdata12>,
-    
+    private readonly userRepository: Repository<User>,   
   ) { }
 
   async findAll(): Promise<User[]> {
