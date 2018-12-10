@@ -20,4 +20,7 @@ export class Mac {
 
   @Column({ default: true })
   status: boolean;
+
+  @Column()
+  description: string;
 }

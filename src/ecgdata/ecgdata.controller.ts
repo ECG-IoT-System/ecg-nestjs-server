@@ -132,7 +132,7 @@ export class EcgdataController {
         @Query('afstat') afstat?: string,
     ){
         if (!from || !to || !afstat) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-        
+        this.userService.updateLasttime({id:id,lasttime_afstat:to})
         return this.ecgdataService.updateAfstatByUser({ id, from, to, afstat });
     }
 
