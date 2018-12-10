@@ -1,8 +1,8 @@
-import { Controller, Post, Param, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Post, Get, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { Ecgdata12Service } from './ecgdata12.service';
 import { UserService } from '../users/user.service';
 import { Ecgdata12Params } from './view-models/ecgdata12-params.model';
-import { ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
+import { ApiUseTags, ApiImplicitBody, ApiImplicitQuery } from '@nestjs/swagger';
 import { Ecgdata12 } from './ecgdata12.entity';
 
 @Controller()
@@ -34,4 +34,19 @@ export class Ecgdata12Controller {
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
 
     }
+
+    @Get('users/:id/ecgdata12')
+    @ApiImplicitQuery({ name: 'to', required: false })
+    @ApiImplicitQuery({ name: 'limit', required: false })
+    async findUserEcgdata(
+        @Param('id') id: string,
+        @Query('from') from: string,
+        @Query('to') to?: string,
+        @Query('limit') limit?: number,
+    ): Promise<Ecgdata12[]> {
+        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
+        
+        return this.ecgdata12Service.findEcgdata12ByUser({ id, from, to, limit });
+    }
+    
 }

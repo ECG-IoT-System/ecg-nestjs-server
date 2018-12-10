@@ -19,4 +19,7 @@ export class Ecgdata {
   @Column({ type: 'double' })
   @Index()
   timestamp: number;
+
+  @Column({ default: false })
+  afstat: boolean;
 }

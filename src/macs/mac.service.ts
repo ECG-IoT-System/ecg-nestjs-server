@@ -15,6 +15,7 @@ export class MacService {
   }
 
   async createMac(params): Promise<Mac> {
+    await this.macRepository.update({mac:params.mac, status: true},{status:false});
     return await this.macRepository.save(params);
   }
 

@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Get, Post, Put, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { EcgdataService } from './ecgdata.service';
 import { UserService } from '../users/user.service'
 import { EcgdataParams } from './view-models/ecgdata-params.model';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { Ecgdata } from './entities/ecgdata.entity';
+import { Gsensor } from './entities/gsensor.entity';
 
 @Controller()
 @ApiUseTags(Ecgdata.name)
@@ -26,6 +27,33 @@ export class EcgdataController {
         
         return this.ecgdataService.findEcgdataByUser({ id, from, to, limit });
     }
+    @Get('users/:id/ecgdata/all')
+    async findUserEcgdata_all(
+        @Param('id') id: string,
+    ): Promise<Ecgdata[]> {
+        return this.ecgdataService.findEcgdataByUser({ id });
+    }
+
+    @Get('users/:id/gsensor')
+    @ApiImplicitQuery({ name: 'to', required: false })
+    @ApiImplicitQuery({ name: 'limit', required: false })
+    async findUserGsensor(
+        @Param('id') id: string,
+        @Query('from') from: string,
+        @Query('to') to?: string,
+        @Query('limit') limit?: string,
+    ): Promise<Gsensor[]> {
+        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
+        
+        return this.ecgdataService.findGsensorByUser({ id, from, to, limit });
+    }
+    @Get('users/:id/gsensor/all')
+    async findUserGsensor_all(
+        @Param('id') id: string,
+    ): Promise<Gsensor[]> {
+        return this.ecgdataService.findGsensorByUser({ id });
+    }
+
 
     @Post('ecgdata')
     async createEcgdata(@Body() params: EcgdataParams, @Res() res) {
@@ -96,4 +124,17 @@ export class EcgdataController {
 
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
     }
+    @Put('users/:id/ecgdata')
+    async updateEcgdataAfstat(
+        @Param('id') id: string,
+        @Query('from') from: string,
+        @Query('to') to?: string,
+        @Query('afstat') afstat?: string,
+    ){
+        if (!from || !to || !afstat) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
+        
+        return this.ecgdataService.updateAfstatByUser({ id, from, to, afstat });
+    }
+
+
 }

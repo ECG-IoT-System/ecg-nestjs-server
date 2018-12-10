@@ -17,4 +17,7 @@ export class Mac {
   @Column()
   @Index()
   mac: string;
+
+  @Column({ default: true })
+  status: boolean;
 }

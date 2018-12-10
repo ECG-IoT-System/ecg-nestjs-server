@@ -40,6 +40,8 @@ export class EcgdataService {
   }
 
   async findEcgdataByUser(params): Promise<Ecgdata[]> {
+    if(!params.from && !params.limit && !params.to)
+      return await this.ecgdataRepository.find({user:params.id});
     const query: any = {
       where: { user: params.id },
       order: { timestamp: 'ASC' },
@@ -55,5 +57,34 @@ export class EcgdataService {
 
     return await this.ecgdataRepository.find(query);
   }
-  
+
+  async findGsensorByUser(params): Promise<Gsensor[]> {
+    if(!params.from && !params.limit && !params.to)
+      return await this.gsensorRepository.find({user:params.id});
+    const query: any = {
+      where: { user: params.id },
+      order: { timestamp: 'ASC' },
+    };
+
+    if (params.to) {
+      query.where.timestamp = Between(params.from, params.to);
+    }
+    else {
+      query.where.timestamp = MoreThan(params.from);
+      query.take = params.limit || 2304;
+    }
+
+    return await this.gsensorRepository.find(query);
+  }
+
+
+  async updateAfstatByUser(params) {
+    const query: any = {
+      user: params.id,
+      timestamp: Between(params.from, params.to)
+    };
+    let istrue = (params.afstat === 'true' || params.afstat === '1');
+    return await this.ecgdataRepository.update(query, { afstat: istrue });
+  }
+
 }
