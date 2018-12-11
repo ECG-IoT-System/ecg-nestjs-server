@@ -14,6 +14,10 @@ export class Ecgdata12Service {
     return await this.ecgdata12Repository.save(params);
   }
   async findEcgdata12ByUser(params): Promise<Ecgdata12[]> {
+    // find all
+    if(!params.from && !params.limit && !params.to)
+      return await this.ecgdata12Repository.find({user:params.id});
+
     const query: any = {
       where: { user: params.id },
       order: { timestamp: 'ASC' },
@@ -23,9 +27,13 @@ export class Ecgdata12Service {
     }
     else {
       query.where.timestamp = MoreThan(params.from);
-      // query.take = params.limit || 2304;
+      query.take = params.limit || 2304;
     }
 
     return await this.ecgdata12Repository.find(query);
+  }
+
+  async deleteEcgdata12ByUser(user){
+    return await this.ecgdata12Repository.delete({user});
   }
 }

@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Put, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Get, Post, Put, Param, Query, Body, HttpException, HttpStatus, Res, Delete } from '@nestjs/common';
 import { EcgdataService } from './ecgdata.service';
 import { UserService } from '../users/user.service'
 import { EcgdataParams } from './view-models/ecgdata-params.model';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { Ecgdata } from './entities/ecgdata.entity';
 import { Gsensor } from './entities/gsensor.entity';
+import { Rssi } from './entities/rssi.entity';
 
 @Controller()
 @ApiUseTags(Ecgdata.name)
@@ -52,6 +53,26 @@ export class EcgdataController {
         @Param('id') id: string,
     ): Promise<Gsensor[]> {
         return this.ecgdataService.findGsensorByUser({ id });
+    }
+
+    @Get('users/:id/rssi')
+    @ApiImplicitQuery({ name: 'to', required: false })
+    @ApiImplicitQuery({ name: 'limit', required: false })
+    async findUserRssi(
+        @Param('id') id: string,
+        @Query('from') from: string,
+        @Query('to') to?: string,
+        @Query('limit') limit?: string,
+    ): Promise<Rssi[]> {
+        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
+        
+        return this.ecgdataService.findRssiByUser({ id, from, to, limit });
+    }
+    @Get('users/:id/rssi/all')
+    async findUserRssi_all(
+        @Param('id') id: string,
+    ): Promise<Rssi[]> {
+        return this.ecgdataService.findRssiByUser({ id });
     }
 
 
@@ -120,8 +141,7 @@ export class EcgdataController {
         this.ecgdataService.createGensors(gbody);
 
         this.userService.updateLasttime({id:user.id,lasttime:params.time[1]})
-        
-
+    
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
     }
     @Put('users/:id/ecgdata')
@@ -134,6 +154,29 @@ export class EcgdataController {
         if (!from || !to || !afstat) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
         this.userService.updateLasttime({id:id,lasttime_afstat:to})
         return this.ecgdataService.updateAfstatByUser({ id, from, to, afstat });
+    }
+
+    @Delete('users/:id/ecgdata')
+    async deleteUserEcgdata(
+        @Param('id') id: string,
+    ){
+        this.userService.updateLasttime({id:id,lasttime:0})
+        this.userService.updateLasttime({id:id,lasttime_afstat:0})
+        return this.ecgdataService.deleteEcgdataByUser({ id });
+    }
+
+    @Delete('users/:id/gsensor')
+    async deleteUserGsensor(
+        @Param('id') id: string,
+    ){
+        return this.ecgdataService.deleteGsensorByUser({ id });
+    }
+
+    @Delete('users/:id/rssi')
+    async deleteUserRssi(
+        @Param('id') id: string,
+    ){
+        return this.ecgdataService.deleteRssiByUser({ id });
     }
 
 

@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Param, Query, Body, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { Ecgdata12Service } from './ecgdata12.service';
 import { UserService } from '../users/user.service';
 import { Ecgdata12Params } from './view-models/ecgdata12-params.model';
@@ -47,6 +47,20 @@ export class Ecgdata12Controller {
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
         
         return this.ecgdata12Service.findEcgdata12ByUser({ id, from, to, limit });
+    }
+
+    @Get('users/:id/ecgdata12/all')
+    async findUserEcgdata12_all(
+        @Param('id') id: string,
+    ): Promise<Ecgdata12[]> {
+        return this.ecgdata12Service.findEcgdata12ByUser({ id });
+    }
+
+    @Delete('users/:id/ecgdata12')
+    async deleteUserEcgdata12(
+        @Param('id') id: string,
+    ){
+        return this.ecgdata12Service.deleteEcgdata12ByUser({ id });
     }
     
 }

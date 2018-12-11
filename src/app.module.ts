@@ -7,6 +7,7 @@ import { EcgdataModule } from './ecgdata/ecgdata.module';
 import { MacModule } from './macs/mac.module';
 import { CoefModule } from './coefs/coef.module';
 import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
+import { LocationModule } from './location/location.module';
 import { URL } from 'url';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
@@ -33,6 +34,7 @@ if (socketPath) dbConfig.extra = { socketPath };
     CoefModule,
     EcgdataModule,
     Ecgdata12Module,
+    LocationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

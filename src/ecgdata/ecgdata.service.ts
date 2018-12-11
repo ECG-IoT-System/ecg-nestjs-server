@@ -40,8 +40,10 @@ export class EcgdataService {
   }
 
   async findEcgdataByUser(params): Promise<Ecgdata[]> {
+    // find all
     if(!params.from && !params.limit && !params.to)
       return await this.ecgdataRepository.find({user:params.id});
+
     const query: any = {
       where: { user: params.id },
       order: { timestamp: 'ASC' },
@@ -77,6 +79,26 @@ export class EcgdataService {
     return await this.gsensorRepository.find(query);
   }
 
+  async findRssiByUser(params): Promise<Rssi[]> {
+
+    if(!params.from && !params.limit && !params.to)
+      return await this.rssiRepository.find({user:params.id});
+    const query: any = {
+      where: { user: params.id },
+      order: { timestamp: 'ASC' },
+    };
+
+    if (params.to) {
+      query.where.timestamp = Between(params.from, params.to);
+    }
+    else {
+      query.where.timestamp = MoreThan(params.from);
+      query.take = params.limit || 2304;
+    }
+
+    return await this.rssiRepository.find(query);
+  }
+
 
   async updateAfstatByUser(params) {
     const query: any = {
@@ -85,6 +107,18 @@ export class EcgdataService {
     };
     let istrue = (params.afstat === 'true' || params.afstat === '1');
     return await this.ecgdataRepository.update(query, { afstat: istrue });
+  }
+
+  async deleteEcgdataByUser(user) {
+    return await this.ecgdataRepository.delete({user});
+  }
+
+  async deleteGsensorByUser(user) {
+    return await this.gsensorRepository.delete({user});
+  }
+
+  async deleteRssiByUser(user) {
+    return await this.rssiRepository.delete({user});
   }
 
 }
