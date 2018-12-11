@@ -5,6 +5,7 @@ import { Coef } from '../coefs/coef.entity';
 import { Gsensor } from '../ecgdata/entities/gsensor.entity';
 import { Ecgdata12 } from '../ecgdata12/ecgdata12.entity';
 import { Rssi } from '../ecgdata/entities/rssi.entity';
+import { Location } from '../location/location.entity'
 
 @Entity()
 export class User {
@@ -41,4 +42,7 @@ export class User {
 
   @OneToMany(type => Coef, coef => coef.user)
   coefs: Coef[];
+
+  @OneToMany(type => Location, location => location.user)
+  locations: Location[];
 }
