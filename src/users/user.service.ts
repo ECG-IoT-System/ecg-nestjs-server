@@ -38,13 +38,13 @@ export class UserService {
     let user = await this.userRepository.findOne({id : param.id});
     //console.log(user);
     if(param.lasttime && param.lasttime > user.lasttime){
+      // return minimum mac lasttime 
       var minlasttime = await this.macRepository.createQueryBuilder("mac")
       .select("min(mac.lasttime)","mintime")
       .where({user:param.id, status:true}).execute();
       console.log(param.lasttime , minlasttime[0].mintime);
-      var updateinfo = await this.userRepository.update({ id :param.id },{lasttime:minlasttime[0].mintime});
-      console.log(updateinfo);
-      return;
+      if(minlasttime[0].mintime >= user.lasttime)
+        return await this.userRepository.update({ id :param.id },{lasttime:minlasttime[0].mintime});
     }
 
     else if(param.lasttime_12L && param.lasttime_12L > user.lasttime_12L){
