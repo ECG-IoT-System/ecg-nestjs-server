@@ -5,10 +5,11 @@ import { Ecgdata12Controller } from './ecgdata12.controller';
 import { Ecgdata12 } from './ecgdata12.entity';
 import { UserService } from '../users/user.service';
 import { User } from '../users/user.entity';
+import { Mac } from '../macs/mac.entity'
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Ecgdata12])],
+  imports: [TypeOrmModule.forFeature([Ecgdata12, User, Mac])],
   providers: [Ecgdata12Service,UserService],
   controllers: [Ecgdata12Controller],
 })

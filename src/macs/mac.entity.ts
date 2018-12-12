@@ -24,6 +24,6 @@ export class Mac {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ type: 'double' })
   lasttime: number;
 }
