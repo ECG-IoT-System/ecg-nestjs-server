@@ -23,4 +23,7 @@ export class Mac {
 
   @Column()
   description: string;
+
+  @Column()
+  lasttime: number;
 }

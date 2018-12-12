@@ -23,11 +23,22 @@ export class EcgdataService {
   ) { }
 
   async createEcgdata(params): Promise<Ecgdata[]> {
-    return await this.ecgdataRepository.save(params);
+    let start_time = Date.now();
+    let ecg = await this.ecgdataRepository.save(params);
+    let ecg_end = Date.now();
+    let ecg_upload = ecg_end - start_time;
+    console.log('ecg upload:'+ecg_upload);
+    return ecg;
+
   }
 
   async createGensors(params): Promise<Gsensor[]> {
-    return await this.gsensorRepository.save(params);
+    let start_time = Date.now();
+    let gsensor = await this.gsensorRepository.save(params);
+    let gsensor_end = Date.now();
+    let gsensor_upload = gsensor_end - start_time;
+    console.log('gsensor upload:'+gsensor_upload);
+    return gsensor;
   }
 
   async createRssi(param): Promise<Rssi> {
@@ -36,7 +47,11 @@ export class EcgdataService {
   }
 
   async findMac(mac: string): Promise<Mac> {
-    return await this.macRepository.findOne({ where: { mac }, relations: ['user'] });
+    return await this.macRepository.findOne({ where: { mac, status:true }, relations: ['user'] });
+  }
+
+  async updateMaclasttime(where, query){
+    return await this.macRepository.update( where , query );
   }
 
   async findEcgdataByUser(params): Promise<Ecgdata[]> {

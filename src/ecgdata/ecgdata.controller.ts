@@ -81,13 +81,12 @@ export class EcgdataController {
         if (!params.data && params.gsensor && params.mac && params.time) {
             throw new HttpException('Data, Gsensor, Mac, Signals are required', HttpStatus.BAD_REQUEST);
         }
-
         const mac = await this.ecgdataService.findMac(params.mac);
 
         if (!mac) {
             throw new HttpException('Mac Mapping Address is undefined', HttpStatus.BAD_REQUEST);
         }
-        console.log(params);
+        //console.log(params);
         const user = mac.user;
         const device_id = mac.device_id;
 
@@ -135,14 +134,18 @@ export class EcgdataController {
         ​
             return group;
         }
-        // move to pipes -- end
-
+        // move to pipes -- end 
         this.ecgdataService.createEcgdata(body);
         this.ecgdataService.createGensors(gbody);
 
-        this.userService.updateLasttime({id:user.id,lasttime:params.time[1]})
-    
+        this.ecgdataService.updateMaclasttime({user:user.id, mac:params.mac},{lasttime:params.time[1]});    
+        this.userService.updateLasttime({id:user.id,lasttime:params.time[1]});
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
+        // console.log('ecg upload:'+ecg_save);
+        // console.log('gsensor upload:'+gsensor_save);
+        // console.log('mac time update:'+mac_lasttime);
+        // console.log('user time update:'+user_lasttime);
+
     }
     @Put('users/:id/ecgdata')
     async updateEcgdataAfstat(

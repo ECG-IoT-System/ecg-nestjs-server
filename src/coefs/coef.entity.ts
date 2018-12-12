@@ -17,13 +17,13 @@ export class Coef {
   @Column()
   description: string;
 
-  @Column({ length: 6000 })
+  @Column({ type:'text' })
   F: string;
 
-  @Column({ length: 6000 })
+  @Column({ type:'text' })
   K: string;
 
-  @Column({ length: 6000 })
+  @Column({ type:'text' })
   HH: string;
 
 }
