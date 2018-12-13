@@ -112,7 +112,7 @@ export class EcgdataController {
         const signals_rate = timediff / params.data.length;
         const body = [];
         params.data.forEach((data, index) => {
-            const timestamp = parseFloat(params.time[0].toString()) + index * signals_rate;
+            const timestamp = Number(params.time[0]) + index * signals_rate;
             console.log('timestamp:'+ index +' '+timestamp);
             body.push({ user: user.id, device_id, data, timestamp });
         });
