@@ -19,9 +19,9 @@ const dbConfig: any = {
   username: dbUrl.username,
   password: dbUrl.password,
   database: dbUrl.pathname.slice(1),
-  logging: false,
+  logging: true,
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: true,
+  synchronize: process.env.DATABASE_AUTO_UPDATE === 'true',
 };
 
 if (socketPath) dbConfig.extra = { socketPath };
