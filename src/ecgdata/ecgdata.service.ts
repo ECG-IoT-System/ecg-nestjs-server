@@ -54,10 +54,10 @@ export class EcgdataService {
   async findEcgdataByUser(params): Promise<Ecgdata[]> {
     // find all
     if(!params.from && !params.limit && !params.to)
-      return await this.ecgdataRepository.find({user:params.id});
+      return await this.ecgdataRepository.find({user: { id: params.id }});
 
     const query: any = {
-      where: { user: params.id },
+      where: { user: { id: params.id } },
       order: { timestamp: 'ASC' },
     };
 
@@ -74,9 +74,9 @@ export class EcgdataService {
 
   async findGsensorByUser(params): Promise<Gsensor[]> {
     if(!params.from && !params.limit && !params.to)
-      return await this.gsensorRepository.find({user:params.id});
+      return await this.gsensorRepository.find({user: { id: params.id }});
     const query: any = {
-      where: { user: params.id },
+      where: { user: { id: params.id } },
       order: { timestamp: 'ASC' },
     };
 
@@ -94,9 +94,9 @@ export class EcgdataService {
   async findRssiByUser(params): Promise<Rssi[]> {
 
     if(!params.from && !params.limit && !params.to)
-      return await this.rssiRepository.find({user:params.id});
+      return await this.rssiRepository.find({user: { id: params.id }});
     const query: any = {
-      where: { user: params.id },
+      where: { user: { id: params.id } },
       order: { timestamp: 'ASC' },
     };
 

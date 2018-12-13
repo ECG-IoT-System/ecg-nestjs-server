@@ -25,10 +25,10 @@ export class User {
   @Column({ type: 'double' })
   lasttime_afstat: number;
 
-  @OneToMany(type => Ecgdata, ecgdaton => ecgdaton.user)
+  @OneToMany(type => Ecgdata, ecgdata => ecgdata.user)
   ecgdata: Ecgdata[];
 
-  @OneToMany(type => Ecgdata, ecgdaton => ecgdaton.user)
+  @OneToMany(type => Ecgdata, ecgdata => ecgdata.user)
   ecgdata12: Ecgdata12[];
 
   @OneToMany(type => Ecgdata, gsensor => gsensor.user)
