@@ -2,9 +2,12 @@ runtime: nodejs
 env: flex
 service: nestjs-server
 
-instance_class: F1
-# automatic_scaling:
-#   max_instances: 20
+instance_class: F4_1G
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 3
+  # max_instances: 6
+  max_concurrent_requests: 50
 
 env_variables:
   NODE_PORT: 8080
