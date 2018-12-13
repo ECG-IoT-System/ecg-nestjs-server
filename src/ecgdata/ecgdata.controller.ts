@@ -78,6 +78,7 @@ export class EcgdataController {
 
     @Post('ecgdata')
     async createEcgdata(@Body() params: EcgdataParams, @Res() res) {
+        console.log(params);
         if (!params.data && params.gsensor && params.mac && params.time) {
             throw new HttpException('Data, Gsensor, Mac, Signals are required', HttpStatus.BAD_REQUEST);
         }
@@ -104,17 +105,22 @@ export class EcgdataController {
 
         // move to pipes
         const timediff = params.time[1] - params.time[0];
+        console.log('params.time[0] : ' + params.time[0]);
+        console.log('timediff' + timediff);
 
         // pad singals
         const signals_rate = timediff / params.data.length;
         const body = [];
         params.data.forEach((data, index) => {
-            const timestamp = params.time[0] + index * signals_rate;
+            const timestamp = parseFloat(params.time[0].toString()) + index * signals_rate;
+            console.log('timestamp:'+ index +' '+timestamp);
             body.push({ user: user.id, device_id, data, timestamp });
         });
-
+        console.log('length' + params.data.length);
+        console.log('signals_rate' + signals_rate);
         // gsensor
         const gsensor_rate = timediff / params.gsensor.length;
+        
         const gbody = [];
         groupArr(params.gsensor, 3)
         .forEach((value, index) => {
