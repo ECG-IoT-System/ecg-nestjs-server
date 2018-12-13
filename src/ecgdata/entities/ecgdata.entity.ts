@@ -20,6 +20,6 @@ export class Ecgdata {
   @Index()
   timestamp: number;
 
-  @Column({ default: false })
+  @Column()
   afstat: boolean;
 }

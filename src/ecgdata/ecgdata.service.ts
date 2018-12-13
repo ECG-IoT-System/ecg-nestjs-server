@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection, Between, MoreThan } from 'typeorm';
+import { Repository, getConnection, Between, MoreThan, InsertQueryBuilder, InsertResult } from 'typeorm';
 import { Ecgdata } from './entities/ecgdata.entity';
 import { Gsensor } from './entities/gsensor.entity';
 import { Mac } from '../macs/mac.entity';
@@ -22,23 +22,20 @@ export class EcgdataService {
     private readonly macRepository: Repository<Mac>,
   ) { }
 
-  async createEcgdata(params): Promise<Ecgdata[]> {
-    let start_time = Date.now();
-    let ecg = await this.ecgdataRepository.save(params);
-    let ecg_end = Date.now();
-    let ecg_upload = ecg_end - start_time;
-    console.log('ecg upload:' + ecg_upload);
-    return ecg;
-
+  async createEcgdata(params): Promise<InsertResult> {
+    return await this.ecgdataRepository.createQueryBuilder()
+    .insert()
+    .into(Ecgdata)
+    .values(params)
+    .execute()
   }
 
-  async createGensors(params): Promise<Gsensor[]> {
-    let start_time = Date.now();
-    let gsensor = await this.gsensorRepository.save(params);
-    let gsensor_end = Date.now();
-    let gsensor_upload = gsensor_end - start_time;
-    console.log('gsensor upload:'+gsensor_upload);
-    return gsensor;
+  async createGensors(params): Promise<InsertResult> {
+    return await this.gsensorRepository.createQueryBuilder()
+    .insert()
+    .into(Gsensor)
+    .values(params)
+    .execute()
   }
 
   async createRssi(param): Promise<Rssi> {

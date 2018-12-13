@@ -83,7 +83,6 @@ export class EcgdataController {
         if (!mac) {
             throw new HttpException('Mac Mapping Address is undefined', HttpStatus.BAD_REQUEST);
         }
-        res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
 
         const user = mac.user;
         const device_id = mac.device_id;
@@ -137,7 +136,7 @@ export class EcgdataController {
 
         this.ecgdataService.updateMaclasttime({user:user.id, mac:params.mac},{lasttime:params.time[1]});    
         this.userService.updateLasttime({id:user.id,lasttime:params.time[1]});
-        return; 
+        return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
     }
     @Put('users/:id/ecgdata')
     async updateEcgdataAfstat(
