@@ -2,7 +2,10 @@ runtime: nodejs
 env: flex
 service: nestjs-server
 
-instance_class: F4_1G
+resources:
+  cpu: 1
+  memory_gb: 2
+
 automatic_scaling:
   min_num_instances: 3
   cool_down_period_sec: 180
