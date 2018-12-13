@@ -27,7 +27,7 @@ export class EcgdataService {
     let ecg = await this.ecgdataRepository.save(params);
     let ecg_end = Date.now();
     let ecg_upload = ecg_end - start_time;
-    console.log('ecg upload:'+ecg_upload);
+    console.log('ecg upload:' + ecg_upload);
     return ecg;
 
   }

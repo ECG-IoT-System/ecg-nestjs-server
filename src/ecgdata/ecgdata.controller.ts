@@ -29,9 +29,7 @@ export class EcgdataController {
         return this.ecgdataService.findEcgdataByUser({ id, from, to, limit });
     }
     @Get('users/:id/ecgdata/all')
-    async findUserEcgdata_all(
-        @Param('id') id: string,
-    ): Promise<Ecgdata[]> {
+    async findUserEcgdata_all(@Param('id') id: string): Promise<Ecgdata[]> {
         return this.ecgdataService.findEcgdataByUser({ id });
     }
 
@@ -75,10 +73,8 @@ export class EcgdataController {
         return this.ecgdataService.findRssiByUser({ id });
     }
 
-
     @Post('ecgdata')
     async createEcgdata(@Body() params: EcgdataParams, @Res() res) {
-        console.log(params);
         if (!params.data && params.gsensor && params.mac && params.time) {
             throw new HttpException('Data, Gsensor, Mac, Signals are required', HttpStatus.BAD_REQUEST);
         }
@@ -88,7 +84,7 @@ export class EcgdataController {
             throw new HttpException('Mac Mapping Address is undefined', HttpStatus.BAD_REQUEST);
         }
         res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
-        //console.log(params);
+
         const user = mac.user;
         const device_id = mac.device_id;
 
@@ -99,25 +95,19 @@ export class EcgdataController {
                 rssi: params.rssi,
                 timestamp: params.time[0],
             };
-
             this.ecgdataService.createRssi(param);
         }
 
         // move to pipes
         const timediff = params.time[1] - params.time[0];
-        console.log('params.time[0] : ' + params.time[0]);
-        console.log('timediff' + timediff);
 
         // pad singals
         const signals_rate = timediff / params.data.length;
         const body = [];
         params.data.forEach((data, index) => {
             const timestamp = Number(params.time[0]) + index * signals_rate;
-            console.log('timestamp:'+ index +' '+timestamp);
             body.push({ user: user.id, device_id, data, timestamp });
         });
-        console.log('length' + params.data.length);
-        console.log('signals_rate' + signals_rate);
         // gsensor
         const gsensor_rate = timediff / params.gsensor.length;
         
@@ -148,11 +138,6 @@ export class EcgdataController {
         this.ecgdataService.updateMaclasttime({user:user.id, mac:params.mac},{lasttime:params.time[1]});    
         this.userService.updateLasttime({id:user.id,lasttime:params.time[1]});
         return; 
-        // console.log('ecg upload:'+ecg_save);
-        // console.log('gsensor upload:'+gsensor_save);
-        // console.log('mac time update:'+mac_lasttime);
-        // console.log('user time update:'+user_lasttime);
-
     }
     @Put('users/:id/ecgdata')
     async updateEcgdataAfstat(
