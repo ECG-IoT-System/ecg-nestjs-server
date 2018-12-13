@@ -13,7 +13,7 @@ export class EcgdataController {
     constructor(
         private readonly ecgdataService: EcgdataService,
         private readonly userService: UserService,
-        ) {}
+    ) { }
 
     @Get('users/:id/ecgdata')
     @ApiImplicitQuery({ name: 'to', required: false })
@@ -25,7 +25,7 @@ export class EcgdataController {
         @Query('limit') limit?: string,
     ): Promise<Ecgdata[]> {
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-        
+
         return this.ecgdataService.findEcgdataByUser({ id, from, to, limit });
     }
     @Get('users/:id/ecgdata/all')
@@ -43,7 +43,7 @@ export class EcgdataController {
         @Query('limit') limit?: string,
     ): Promise<Gsensor[]> {
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-        
+
         return this.ecgdataService.findGsensorByUser({ id, from, to, limit });
     }
     @Get('users/:id/gsensor/all')
@@ -63,7 +63,7 @@ export class EcgdataController {
         @Query('limit') limit?: string,
     ): Promise<Rssi[]> {
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-        
+
         return this.ecgdataService.findRssiByUser({ id, from, to, limit });
     }
     @Get('users/:id/rssi/all')
@@ -109,34 +109,34 @@ export class EcgdataController {
         });
         // gsensor
         const gsensor_rate = timediff / params.gsensor.length;
-        
+
         const gbody = [];
         groupArr(params.gsensor, 3)
-        .forEach((value, index) => {
-            const timestamp = params.time[0] + index * gsensor_rate;
-            const axis = { axisX: value[0], axisY: value[1], axisZ: value[2] };
-            gbody.push({ user: user.id, device_id, timestamp, ...axis });
-        });
+            .forEach((value, index) => {
+                const timestamp = params.time[0] + index * gsensor_rate;
+                const axis = { axisX: value[0], axisY: value[1], axisZ: value[2] };
+                gbody.push({ user: user.id, device_id, timestamp, ...axis });
+            });
 
         function groupArr(data, n) {
             const group = [];
-        ​
+
             for (let i = 0, j = 0; i < data.length; i++) {
                 if (i >= n && i % n === 0)
                     j++;
                 group[j] = group[j] || [];
                 group[j].push(data[i]);
             }
-        ​
+
             return group;
         }
         // move to pipes -- end 
         this.ecgdataService.createEcgdata(body);
         this.ecgdataService.createGensors(gbody);
 
-        this.ecgdataService.updateMaclasttime({user:user.id, mac:params.mac},{lasttime:params.time[1]});    
-        this.userService.updateLasttime({id:user.id,lasttime:params.time[1]});
-        return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
+        this.ecgdataService.updateMaclasttime({ user: user.id, mac: params.mac }, { lasttime: Number(params.time[1]) });
+        this.userService.updateLasttime({ id: user.id, lasttime: Number(params.time[1]) });
+        return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create' });
     }
     @Put('users/:id/ecgdata')
     async updateEcgdataAfstat(
@@ -144,32 +144,32 @@ export class EcgdataController {
         @Query('from') from: string,
         @Query('to') to?: string,
         @Query('afstat') afstat?: string,
-    ){
+    ) {
         if (!from || !to || !afstat) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-        this.userService.updateLasttime({id:id,lasttime_afstat:to})
+        this.userService.updateLasttime({ id: id, lasttime_afstat: to })
         return this.ecgdataService.updateAfstatByUser({ id, from, to, afstat });
     }
 
     @Delete('users/:id/ecgdata')
     async deleteUserEcgdata(
         @Param('id') id: string,
-    ){
-        this.userService.updateLasttime({id:id,lasttime:0})
-        this.userService.updateLasttime({id:id,lasttime_afstat:0})
+    ) {
+        this.userService.updateLasttime({ id: id, lasttime: 0 })
+        this.userService.updateLasttime({ id: id, lasttime_afstat: 0 })
         return this.ecgdataService.deleteEcgdataByUser({ id });
     }
 
     @Delete('users/:id/gsensor')
     async deleteUserGsensor(
         @Param('id') id: string,
-    ){
+    ) {
         return this.ecgdataService.deleteGsensorByUser({ id });
     }
 
     @Delete('users/:id/rssi')
     async deleteUserRssi(
         @Param('id') id: string,
-    ){
+    ) {
         return this.ecgdataService.deleteRssiByUser({ id });
     }
 
