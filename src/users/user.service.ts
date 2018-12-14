@@ -35,7 +35,7 @@ export class UserService {
   }
 
   async updateLasttime(param) {
-    console.log(param)
+    // console.log('updatelasttime:' + param.lasttime);
 
     let user = await this.userRepository.findOne({ id: param.id });
     let query: any = {}
@@ -49,20 +49,25 @@ export class UserService {
         if (mac.lasttime > minlasttime)
           minlasttime = mac.lasttime
       })
+      // console.log('mac:' + macs);
 
-      if (minlasttime >= user.lasttime)
+      if (minlasttime >= user.lasttime) {
         query.lasttime = minlasttime;
+        return await this.userRepository.update({ id: param.id }, query)
+      }
     }
 
     else if (param.lasttime_12L && param.lasttime_12L > user.lasttime_12L) {
       query.lasttime_12L = param.lasttime_12L;
+      return await this.userRepository.update({ id: param.id }, query)
     }
 
     else if (param.lasttime_afstat && param.lasttime_afstat > user.lasttime_afstat) {
       query.lasttime_afstat = param.lasttime_afstat;
+      return await this.userRepository.update({ id: param.id }, query)
     }
 
-    return await this.userRepository.update({ id: param.id }, query)
+
   }
 
 }
