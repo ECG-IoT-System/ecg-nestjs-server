@@ -3,16 +3,20 @@ import { EcgdataService } from './ecgdata.service';
 import { UserService } from '../users/user.service'
 import { EcgdataParams } from './view-models/ecgdata-params.model';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
-import { Ecgdata } from './entities/ecgdata.entity';
-import { Gsensor } from './entities/gsensor.entity';
-import { Rssi } from './entities/rssi.entity';
+import { Ecgdata } from './ecgdata.entity';
+import { RssiService } from 'src/rssi/rssi.service';
+import { GsensorService } from 'src/gsensor/gsensor.service';
+import { MacService } from 'src/macs/mac.service';
 
 @Controller()
 @ApiUseTags(Ecgdata.name)
 export class EcgdataController {
     constructor(
         private readonly ecgdataService: EcgdataService,
+        private readonly gsensorService: GsensorService,
+        private readonly rssiService: RssiService,
         private readonly userService: UserService,
+        private readonly macService: MacService,
     ) { }
 
     @Get('users/:id/ecgdata')
@@ -33,52 +37,12 @@ export class EcgdataController {
         return this.ecgdataService.findEcgdataByUser({ id });
     }
 
-    @Get('users/:id/gsensor')
-    @ApiImplicitQuery({ name: 'to', required: false })
-    @ApiImplicitQuery({ name: 'limit', required: false })
-    async findUserGsensor(
-        @Param('id') id: string,
-        @Query('from') from: string,
-        @Query('to') to?: string,
-        @Query('limit') limit?: string,
-    ): Promise<Gsensor[]> {
-        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-
-        return this.ecgdataService.findGsensorByUser({ id, from, to, limit });
-    }
-    @Get('users/:id/gsensor/all')
-    async findUserGsensor_all(
-        @Param('id') id: string,
-    ): Promise<Gsensor[]> {
-        return this.ecgdataService.findGsensorByUser({ id });
-    }
-
-    @Get('users/:id/rssi')
-    @ApiImplicitQuery({ name: 'to', required: false })
-    @ApiImplicitQuery({ name: 'limit', required: false })
-    async findUserRssi(
-        @Param('id') id: string,
-        @Query('from') from: string,
-        @Query('to') to?: string,
-        @Query('limit') limit?: string,
-    ): Promise<Rssi[]> {
-        if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-
-        return this.ecgdataService.findRssiByUser({ id, from, to, limit });
-    }
-    @Get('users/:id/rssi/all')
-    async findUserRssi_all(
-        @Param('id') id: string,
-    ): Promise<Rssi[]> {
-        return this.ecgdataService.findRssiByUser({ id });
-    }
-
     @Post('ecgdata')
     async createEcgdata(@Body() params: EcgdataParams, @Res() res) {
         if (!params.data && params.gsensor && params.mac && params.time) {
             throw new HttpException('Data, Gsensor, Mac, Signals are required', HttpStatus.BAD_REQUEST);
         }
-        const mac = await this.ecgdataService.findMac(params.mac);
+        const mac = await this.macService.findMac(params.mac);
 
         if (!mac) {
             throw new HttpException('Mac Mapping Address is undefined', HttpStatus.BAD_REQUEST);
@@ -94,7 +58,7 @@ export class EcgdataController {
                 rssi: params.rssi,
                 timestamp: params.time[0],
             };
-            this.ecgdataService.createRssi(param);
+            this.rssiService.createRssi(param);
         }
 
         // move to pipes
@@ -132,12 +96,13 @@ export class EcgdataController {
         }
         // move to pipes -- end 
         this.ecgdataService.createEcgdata(body);
-        this.ecgdataService.createGensors(gbody);
+        this.gsensorService.createGensors(gbody);
 
-        this.ecgdataService.updateMaclasttime({ user: user.id, mac: params.mac }, { lasttime: Number(params.time[1]) });
+        this.macService.updateMaclasttime({ user: user.id, mac: params.mac }, { lasttime: Number(params.time[1]) });
         this.userService.updateLasttime({ id: user.id, lasttime: Number(params.time[1]) });
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create' });
     }
+
     @Put('users/:id/ecgdata')
     async updateEcgdataAfstat(
         @Param('id') id: string,
@@ -151,27 +116,9 @@ export class EcgdataController {
     }
 
     @Delete('users/:id/ecgdata')
-    async deleteUserEcgdata(
-        @Param('id') id: string,
-    ) {
+    async deleteUserEcgdata(@Param('id') id: string) {
         this.userService.updateLasttime({ id: id, lasttime: 0 })
         this.userService.updateLasttime({ id: id, lasttime_afstat: 0 })
         return this.ecgdataService.deleteEcgdataByUser({ id });
     }
-
-    @Delete('users/:id/gsensor')
-    async deleteUserGsensor(
-        @Param('id') id: string,
-    ) {
-        return this.ecgdataService.deleteGsensorByUser({ id });
-    }
-
-    @Delete('users/:id/rssi')
-    async deleteUserRssi(
-        @Param('id') id: string,
-    ) {
-        return this.ecgdataService.deleteRssiByUser({ id });
-    }
-
-
 }

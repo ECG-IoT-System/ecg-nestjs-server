@@ -9,6 +9,7 @@ import { CoefModule } from './coefs/coef.module';
 import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
 import { LocationModule } from './location/location.module';
 import { URL } from 'url';
+import { RssiModule } from './rssi/rssi.module';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 const socketPath = dbUrl.searchParams.get('socketPath');
@@ -35,6 +36,8 @@ if (socketPath) dbConfig.extra = { socketPath };
     EcgdataModule,
     Ecgdata12Module,
     LocationModule,
+    RssiModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],
