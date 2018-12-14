@@ -1,12 +1,11 @@
 import { Controller, Get, Post, Put, Param, Query, Body, HttpException, HttpStatus, Res, Delete } from '@nestjs/common';
 import { RssiService } from './rssi.service';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
-import { Ecgdata } from '../ecgdata/ecgdata.entity';
 import { Rssi } from '../rssi/rssi.entity';
 import { DeleteResult } from 'typeorm';
 
 @Controller()
-@ApiUseTags(Ecgdata.name)
+@ApiUseTags(Rssi.name)
 export class RssiController {
     constructor(
         private readonly rssiService: RssiService,

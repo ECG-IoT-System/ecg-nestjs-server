@@ -1,12 +1,11 @@
 import { Controller, Get, Post, Put, Param, Query, Body, HttpException, HttpStatus, Res, Delete } from '@nestjs/common';
 import { GsensorService } from './gsensor.service';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
-import { Ecgdata } from '../ecgdata/ecgdata.entity';
 import { Gsensor } from '../gsensor/gsensor.entity';
 import { DeleteResult } from 'typeorm';
 
 @Controller()
-@ApiUseTags(Ecgdata.name)
+@ApiUseTags(Gsensor.name)
 export class GsensorController {
     constructor(
         private readonly gsensorService: GsensorService,
