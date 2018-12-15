@@ -53,20 +53,20 @@ export class UserService {
 
       if (minlasttime >= user.lasttime) {
         query.lasttime = minlasttime;
-        return await this.userRepository.update({ id: param.id }, query)
       }
     }
 
     else if (param.lasttime_12L && param.lasttime_12L > user.lasttime_12L) {
-      query.lasttime_12L = param.lasttime_12L;
-      return await this.userRepository.update({ id: param.id }, query)
+      query.lasttime_12L = param.lasttime_12L; 
     }
 
     else if (param.lasttime_afstat && param.lasttime_afstat > user.lasttime_afstat) {
       query.lasttime_afstat = param.lasttime_afstat;
-      return await this.userRepository.update({ id: param.id }, query)
     }
 
+    if (Object.keys(query).length === 0) return;
+
+    return await this.userRepository.update({ id: param.id }, query)
 
   }
 

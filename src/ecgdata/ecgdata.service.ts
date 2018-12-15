@@ -23,19 +23,30 @@ export class EcgdataService {
   ) { }
 
   async createEcgdata(params): Promise<InsertResult> {
-    return await this.ecgdataRepository.createQueryBuilder()
+    // console.time('ecg upload time');
+    var st = Date.now();
+    let ecg =  await this.ecgdataRepository.createQueryBuilder()
     .insert()
     .into(Ecgdata)
     .values(params)
     .execute()
+    // console.timeEnd('ecg upload time');
+    var et = Date.now();
+    var time = et-st;
+    console.log('ecg upload:'+time);
+    return ecg;
   }
 
   async createGensors(params): Promise<InsertResult> {
-    return await this.gsensorRepository.createQueryBuilder()
+    
+    console.time('gsensor upload time');
+    let gsensor =  await this.gsensorRepository.createQueryBuilder()
     .insert()
     .into(Gsensor)
     .values(params)
     .execute()
+    console.timeEnd('gsensor upload time');
+    return gsensor;
   }
 
   async createRssi(param): Promise<Rssi> {
@@ -68,7 +79,7 @@ export class EcgdataService {
       query.where.timestamp = MoreThan(params.from);
       query.take = params.limit || 2304;
     }
-
+  
     return await this.ecgdataRepository.find(query);
   }
 
