@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn, Index } from 'typeorm';
-import { User } from '../../users/user.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
-export class Ecgdata {
+export class Gsensor {
   @PrimaryGeneratedColumn()
   id: ObjectID;
 
@@ -14,12 +14,15 @@ export class Ecgdata {
   device_id: number;
 
   @Column({ type: 'double' })
-  data: number;
+  axisX: number;
+
+  @Column({ type: 'double' })
+  axisY: number;
+
+  @Column({ type: 'double' })
+  axisZ: number;
 
   @Column({ type: 'double' })
   @Index()
   timestamp: number;
-
-  @Column()
-  afstat: boolean;
 }

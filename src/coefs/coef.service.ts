@@ -23,7 +23,7 @@ export class CoefService {
   }
 
   async findbyUserId(id): Promise<Coef[]> {
-    return await this.coefRepository.find({ user:{id} });
+    return await this.coefRepository.find({ user: {id} });
   }
   async findbyUserId_version(user, version): Promise<Coef> {
     return await this.coefRepository.findOne({ user, version });

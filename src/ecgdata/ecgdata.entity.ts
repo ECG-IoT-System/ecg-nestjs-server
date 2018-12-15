@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ManyToOne, JoinColumn, Index } from 'typeorm';
-import { User } from '../../users/user.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
-export class Rssi {
+export class Ecgdata {
   @PrimaryGeneratedColumn()
   id: ObjectID;
 
@@ -10,13 +10,16 @@ export class Rssi {
   @JoinColumn()
   user: User;
 
-  @Column()
-  mac: string;
-
   @Column({ type: 'int' })
-  rssi: number;
+  device_id: number;
+
+  @Column({ type: 'double' })
+  data: number;
 
   @Column({ type: 'double' })
   @Index()
   timestamp: number;
+
+  @Column()
+  afstat: boolean;
 }

@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { Mac } from '../macs/mac.entity'
-
+import { Mac } from '../macs/mac.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
     @InjectRepository(Mac)
     private readonly macRepository: Repository<Mac>,
   ) { }
@@ -27,8 +27,7 @@ export class UserService {
   }
 
   async createOne(user): Promise<User> {
-    let Isuser = await this.userRepository.findOne({ username: user.username });
-    console.log(Isuser);
+    const Isuser = await this.userRepository.findOne({ username: user.username });
     if (!Isuser) {
       return await this.userRepository.save(user);
     }
@@ -37,18 +36,18 @@ export class UserService {
   async updateLasttime(param) {
     // console.log('updatelasttime:' + param.lasttime);
 
-    let user = await this.userRepository.findOne({ id: param.id });
-    let query: any = {}
+    const user = await this.userRepository.findOne({ id: param.id });
+    const query: any = {};
 
     if (param.lasttime && param.lasttime > user.lasttime) {
-      // return minimum mac lasttime 
-      let macs = await this.macRepository.find({ user: { id: param.id } });
+      // return minimum mac lasttime
+      const macs = await this.macRepository.find({ user: { id: param.id } });
       let minlasttime = 0;
 
       macs.forEach(mac => {
         if (mac.lasttime > minlasttime)
-          minlasttime = mac.lasttime
-      })
+          minlasttime = mac.lasttime;
+      });
       // console.log('mac:' + macs);
 
       if (minlasttime >= user.lasttime) {
