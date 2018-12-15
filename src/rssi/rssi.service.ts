@@ -14,13 +14,12 @@ export class RssiService {
   ) { }
 
   async createRssi(param): Promise<Rssi> {
-    console.log(param);
     return await this.rssiRepository.save(param);
   }
 
   async findRssiByUser(params): Promise<Rssi[]> {
 
-    if(!params.from && !params.limit && !params.to)
+    if (!params.from && !params.limit && !params.to)
       return await this.rssiRepository.find({user: { id: params.id }});
     const query: any = {
       where: { user: { id: params.id } },

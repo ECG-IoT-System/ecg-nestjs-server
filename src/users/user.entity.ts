@@ -5,7 +5,7 @@ import { Coef } from '../coefs/coef.entity';
 import { Gsensor } from '../gsensor/gsensor.entity';
 import { Ecgdata12 } from '../ecgdata12/ecgdata12.entity';
 import { Rssi } from '../rssi/rssi.entity';
-import { Location } from '../location/location.entity'
+import { Location } from '../location/location.entity';
 
 @Entity()
 export class User {

@@ -15,11 +15,11 @@ export class GsensorService {
     .insert()
     .into(Gsensor)
     .values(params)
-    .execute()
+    .execute();
   }
 
   async findGsensorByUser(params): Promise<Gsensor[]> {
-    if(!params.from && !params.limit && !params.to)
+    if (!params.from && !params.limit && !params.to)
       return await this.gsensorRepository.find({user: { id: params.id }});
     const query: any = {
       where: { user: { id: params.id } },

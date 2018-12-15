@@ -15,12 +15,12 @@ export class EcgdataService {
     .insert()
     .into(Ecgdata)
     .values(params)
-    .execute()
+    .execute();
   }
 
   async findEcgdataByUser(params): Promise<Ecgdata[]> {
     // find all
-    if(!params.from && !params.limit && !params.to)
+    if (!params.from && !params.limit && !params.to)
       return await this.ecgdataRepository.find({user: { id: params.id }});
 
     const query: any = {
@@ -42,9 +42,9 @@ export class EcgdataService {
   async updateAfstatByUser(params) {
     const query: any = {
       user: params.id,
-      timestamp: Between(params.from, params.to)
+      timestamp: Between(params.from, params.to),
     };
-    let istrue = (params.afstat === 'true' || params.afstat === '1');
+    const istrue = (params.afstat === 'true' || params.afstat === '1');
     return await this.ecgdataRepository.update(query, { afstat: istrue });
   }
 

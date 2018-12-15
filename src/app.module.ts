@@ -37,7 +37,7 @@ if (socketPath) dbConfig.extra = { socketPath };
     Ecgdata12Module,
     LocationModule,
     RssiModule,
-    
+
   ],
   controllers: [AppController],
   providers: [AppService],

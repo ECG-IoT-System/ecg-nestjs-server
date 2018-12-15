@@ -29,7 +29,7 @@ export class Ecgdata12Controller {
         });
 
         this.ecgdata12Service.createEcgdata12(body);
-        this.userService.updateLasttime({ id, lasttime_12L:params[params.length-1].time });
+        this.userService.updateLasttime({ id, lasttime_12L: params[params.length - 1].time });
 
         return res.status(HttpStatus.OK).json({ statusCode: 200, message: 'success create'});
 
@@ -45,7 +45,7 @@ export class Ecgdata12Controller {
         @Query('limit') limit?: number,
     ): Promise<Ecgdata12[]> {
         if (!from) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-        
+
         return this.ecgdata12Service.findEcgdata12ByUser({ id, from, to, limit });
     }
 
@@ -62,5 +62,5 @@ export class Ecgdata12Controller {
     ){
         return this.ecgdata12Service.deleteEcgdata12ByUser({ id });
     }
-    
+
 }

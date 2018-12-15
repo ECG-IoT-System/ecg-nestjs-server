@@ -15,7 +15,7 @@ export class Ecgdata12Service {
   }
   async findEcgdata12ByUser(params): Promise<Ecgdata12[]> {
     // find all
-    if(!params.from && !params.limit && !params.to)
+    if (!params.from && !params.limit && !params.to)
       return await this.ecgdata12Repository.find({user: { id: params.id }});
 
     const query: any = {

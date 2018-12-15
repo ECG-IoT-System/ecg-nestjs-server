@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Param, Query, Body, HttpException, HttpStatus, Res, Delete } from '@nestjs/common';
 import { EcgdataService } from './ecgdata.service';
-import { UserService } from '../users/user.service'
+import { UserService } from '../users/user.service';
 import { EcgdataParams } from './view-models/ecgdata-params.model';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { Ecgdata } from './ecgdata.entity';
@@ -94,7 +94,7 @@ export class EcgdataController {
 
             return group;
         }
-        // move to pipes -- end 
+        // move to pipes -- end
         this.ecgdataService.createEcgdata(body);
         this.gsensorService.createGensors(gbody);
 
@@ -111,14 +111,14 @@ export class EcgdataController {
         @Query('afstat') afstat?: string,
     ) {
         if (!from || !to || !afstat) throw new HttpException('from is required', HttpStatus.BAD_REQUEST);
-        this.userService.updateLasttime({ id: id, lasttime_afstat: to })
+        this.userService.updateLasttime({ id, lasttime_afstat: to });
         return this.ecgdataService.updateAfstatByUser({ id, from, to, afstat });
     }
 
     @Delete('users/:id/ecgdata')
     async deleteUserEcgdata(@Param('id') id: string) {
-        this.userService.updateLasttime({ id: id, lasttime: 0 })
-        this.userService.updateLasttime({ id: id, lasttime_afstat: 0 })
+        this.userService.updateLasttime({ id, lasttime: 0 });
+        this.userService.updateLasttime({ id, lasttime_afstat: 0 });
         return this.ecgdataService.deleteEcgdataByUser({ id });
     }
 }

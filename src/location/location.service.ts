@@ -19,7 +19,7 @@ export class LocationService {
   }
   async findLocationByUser(params): Promise<Location[]> {
     // find all
-    if(!params.from && !params.limit && !params.to)
+    if (!params.from && !params.limit && !params.to)
       return await this.locationRepository.find({user: {id: params.id}});
 
     const query: any = {
