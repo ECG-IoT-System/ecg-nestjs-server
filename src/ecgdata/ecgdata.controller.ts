@@ -4,9 +4,9 @@ import { UserService } from '../users/user.service'
 import { EcgdataParams } from './view-models/ecgdata-params.model';
 import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { Ecgdata } from './ecgdata.entity';
-import { RssiService } from 'src/rssi/rssi.service';
-import { GsensorService } from 'src/gsensor/gsensor.service';
-import { MacService } from 'src/macs/mac.service';
+import { RssiService } from '../rssi/rssi.service';
+import { GsensorService } from '../gsensor/gsensor.service';
+import { MacService } from '../macs/mac.service';
 
 @Controller()
 @ApiUseTags(Ecgdata.name)

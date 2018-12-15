@@ -8,9 +8,9 @@ import { Mac } from '../macs/mac.entity';
 import { Rssi } from '../rssi/rssi.entity';
 import { User } from '../users/user.entity';
 import { UserService } from '../users/user.service';
-import { RssiService } from 'src/rssi/rssi.service';
-import { GsensorService } from 'src/gsensor/gsensor.service';
-import { MacService } from 'src/macs/mac.service';
+import { RssiService } from '../rssi/rssi.service';
+import { GsensorService } from '../gsensor/gsensor.service';
+import { MacService } from '../macs/mac.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Ecgdata, Gsensor, Mac, Rssi, User])],
