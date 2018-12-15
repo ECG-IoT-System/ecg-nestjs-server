@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getConnection, Between, MoreThan, InsertQueryBuilder, InsertResult, DeleteResult } from 'typeorm';
-import { Ecgdata } from '../ecgdata/ecgdata.entity';
-import { Gsensor } from '../gsensor/gsensor.entity';
-import { Mac } from '../macs/mac.entity';
 import { Rssi } from './rssi.entity';
 
 @Injectable()
