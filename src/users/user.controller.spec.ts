@@ -21,11 +21,11 @@ describe('UserController', () => {
         userController = module.get<UserController>(UserController);
     });
 
-    // describe('findAll', () => {
-        // it('get all', async () => {
-        //     console.log('---', userController)
-        //     expect(userController).toBeDefined();
-        //     expect(await userController.findAll()).toBe('Hello World!');
-        // });
-    // });
+    describe('findAll', () => {
+        it('get all', async () => {
+            console.log('---', userController)
+            expect(userController).toBeDefined();
+            // expect(await userController.findAll()).toBe('Hello World!');
+        });
+    });
 });
