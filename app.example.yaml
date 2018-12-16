@@ -19,17 +19,17 @@ env_variables:
 beta_settings:
   cloud_sql_instances: ecgproject-1069:us-central1:ae86
 
-liveness_check:
-  path: "/live"
-  check_interval_sec: 30
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
+# liveness_check:
+#   path: "/live"
+#   check_interval_sec: 30
+#   timeout_sec: 4
+#   failure_threshold: 2
+#   success_threshold: 2
 
-readiness_check:
-  path: "/ready"
-  check_interval_sec: 5
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
-  app_start_timeout_sec: 60
+# readiness_check:
+#   path: "/ready"
+#   check_interval_sec: 5
+#   timeout_sec: 4
+#   failure_threshold: 2
+#   success_threshold: 2
+#   app_start_timeout_sec: 60
