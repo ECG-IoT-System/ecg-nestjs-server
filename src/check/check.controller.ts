@@ -1,11 +1,11 @@
 import { Controller, Get, HttpException, HttpStatus, Res } from '@nestjs/common';
-import { UserService } from '../users/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
+import { CheckService } from './check.service';
 
 @Controller()
 @ApiUseTags('Check')
 export class CheckController {
-    constructor(private readonly userService: UserService) { }
+    constructor(private readonly checkService: CheckService) { }
 
     @Get('live')
     livenessCheck(@Res() res) {
@@ -15,7 +15,7 @@ export class CheckController {
     @Get('ready')
     readinessCheck(@Res() res) {
       try {
-        this.userService.findAll()
+        this.checkService.findAll()
       }
       catch(e) {
         throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR)

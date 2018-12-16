@@ -3,11 +3,11 @@ env: flex
 service: nestjs-server
 
 resources:
-  cpu: 1
-  memory_gb: 2
+  cpu: 1.5
+  memory_gb: 4
 
 automatic_scaling:
-  min_num_instances: 3
+  min_num_instances: 4
   cool_down_period_sec: 180
   cpu_utilization:
     target_utilization: 0.65

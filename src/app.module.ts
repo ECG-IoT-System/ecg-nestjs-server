@@ -10,8 +10,7 @@ import { Ecgdata12Module } from './ecgdata12/ecgdata12.module';
 import { LocationModule } from './location/location.module';
 import { URL } from 'url';
 import { RssiModule } from './rssi/rssi.module';
-import { UserService } from './users/user.service';
-import { CheckModule } from './check/user.module';
+import { CheckModule } from './check/check.module';
 
 const dbUrl = new URL(process.env.DATABASE_URL);
 const socketPath = dbUrl.searchParams.get('socketPath');
