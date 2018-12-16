@@ -10,7 +10,7 @@ export class CheckService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<User[]> {
+  async checkUsers(): Promise<User[]> {
     return await this.userRepository.find();
   }
 }

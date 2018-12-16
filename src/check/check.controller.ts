@@ -15,7 +15,7 @@ export class CheckController {
     @Get('ready')
     readinessCheck(@Res() res) {
       try {
-        this.checkService.findAll()
+        this.checkService.checkUsers()
       }
       catch(e) {
         throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR)
