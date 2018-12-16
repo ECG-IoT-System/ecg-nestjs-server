@@ -60,7 +60,7 @@ export class EcgdataController {
             };
             this.rssiService.createRssi(param);
         }
-
+        console.log('params.data.length:' + params.data.length);
         // move to pipes
         const timediff = params.time[1] - params.time[0];
 
