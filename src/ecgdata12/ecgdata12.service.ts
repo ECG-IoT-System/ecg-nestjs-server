@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Between, MoreThan } from 'typeorm';
+import { Repository, Between, MoreThan, InsertResult } from 'typeorm';
 import { Ecgdata12 } from './ecgdata12.entity';
 
 @Injectable()
@@ -10,9 +10,14 @@ export class Ecgdata12Service {
     private readonly ecgdata12Repository: Repository<Ecgdata12>,
   ) { }
 
-  async createEcgdata12(params): Promise<Ecgdata12[]> {
-    return await this.ecgdata12Repository.save(params);
+  async createEcgdata12(params): Promise<InsertResult> {
+    return await this.ecgdata12Repository.createQueryBuilder()
+      .insert()
+      .into(Ecgdata12)
+      .values(params)
+      .execute();
   }
+
   async findEcgdata12ByUser(params): Promise<Ecgdata12[]> {
     // find all
     if (!params.from && !params.limit && !params.to)

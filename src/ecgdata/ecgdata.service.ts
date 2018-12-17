@@ -11,13 +11,11 @@ export class EcgdataService {
   ) { }
 
   async createEcgdata(params): Promise<InsertResult> {
-    // console.time('ecg upload time');
-    let ecg =  await this.ecgdataRepository.createQueryBuilder()
+    return await this.ecgdataRepository.createQueryBuilder()
     .insert()
     .into(Ecgdata)
     .values(params)
     .execute();
-    return ecg;
   }
 
   async findEcgdataByUser(params): Promise<Ecgdata[]> {
